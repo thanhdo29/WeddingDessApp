@@ -14,6 +14,7 @@ import CartScreen from './screens/CartScreen';
 import StatisticalScreen from './screens/StatisticalScreen';
 import ListServiceScreen from './screens/ListServiceScreen';
 import ListStaffScreen from './screens/ListStaffScreen';
+import BillScreen from './screens/BillScreen';
 
 
 
@@ -31,7 +32,7 @@ const App = () => {
     //   </Stack.Navigator>
     // </NavigationContainer>
     
-      <ListStaffScreen/>
+        <BillScreen/>
   )
 }
 

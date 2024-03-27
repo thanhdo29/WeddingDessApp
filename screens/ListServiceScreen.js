@@ -39,7 +39,6 @@ const ListServiceScreen = () => {
   return (
     <View style={styles.container}>
       <CusomTextInputSearch />
-
       <TouchableOpacity style={styles.btnAdd}>
         <Icon name="add" color={Colors.White} size={Fontsizes.fs_22} />
       </TouchableOpacity>
