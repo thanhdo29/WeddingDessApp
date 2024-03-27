@@ -8,12 +8,13 @@ import StatisticalScreen from '../screens/StatisticalScreen';
 import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import { Colors } from '../constants';
-
+import Icon from 'react-native-vector-icons/AntDesign'
 
 const BottonTab = () => {
     const Tab = createBottomTabNavigator();
 
     return (
+        
         <Tab.Navigator
             screenOptions={({ route }) => ({
                 tabBarIcon: ({ focused, color, size }) => {
@@ -47,9 +48,15 @@ const BottonTab = () => {
             <Tab.Screen name='cart' component={CartScreen} />
             <Tab.Screen name='statistical' component={StatisticalScreen} />
         </Tab.Navigator>
+        
     )
 }
 
 export default BottonTab
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    contauner:{
+        flexDirection:'column',
+        justifyContent:'flex-end'
+    }
+})
