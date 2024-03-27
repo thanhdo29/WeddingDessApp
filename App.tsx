@@ -14,6 +14,7 @@ import CartScreen from './screens/CartScreen';
 import StatisticalScreen from './screens/StatisticalScreen';
 import ListServiceScreen from './screens/ListServiceScreen';
 import ListStaffScreen from './screens/ListStaffScreen';
+import ListJob from './screens/ListJob';
 
 
 
@@ -22,16 +23,20 @@ import ListStaffScreen from './screens/ListStaffScreen';
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
-    // <NavigationContainer>
-    //   <Stack.Navigator screenOptions={{headerShown:false}}>
-    //     <Stack.Screen name='welcom' component={WelcomScreen}/>
-    //     <Stack.Screen name='login' component={LoginScreen}/>
-    //     <Stack.Screen name='signup' component={SignupScreen}/>
-    //     <Stack.Screen name='home2' component={BottonTab}/>
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName='welcom' screenOptions={{headerShown:false}}>
+        <Stack.Screen name='welcom' component={WelcomScreen}/>
+        <Stack.Screen name='login' component={LoginScreen}/>
+        <Stack.Screen name='signup' component={SignupScreen}/>
+        <Stack.Screen name='home2' component={BottonTab}/>
+        <Stack.Screen name='staff' component={ListStaffScreen}></Stack.Screen>
+        <Stack.Screen name='Service' component={ListServiceScreen}></Stack.Screen>
+        <Stack.Screen name='Customer' component={ListCustomerScreen}></Stack.Screen>
+        <Stack.Screen name='job' component={ListJob}/>
+      </Stack.Navigator>
+    </NavigationContainer>
     
-      <ListStaffScreen/>
+      
   )
 }
 
