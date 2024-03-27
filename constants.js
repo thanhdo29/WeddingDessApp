@@ -12,7 +12,8 @@ const Fontsizes = {
     fs_13: 13,
     fs_9: 9,
     fs_10: 10,
-    fs_18:18
+    fs_18:18,
+    fs_39:39
   };
   
   const Radius = {
