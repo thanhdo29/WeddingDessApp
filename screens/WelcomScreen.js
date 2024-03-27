@@ -2,18 +2,19 @@ import { Image, StyleSheet, Text, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../component/CustomButton';
+import { Colors } from '../constants';
 
 const WelcomScreen = () => {
   const navigation = useNavigation();
 
-  const login =()=>{
-    navigation.navigate('login')
-  }
+  useEffect(() => {
+    setTimeout(() => {
+      navigation.navigate('login');
+    }, 3000)
+  }, [])
   return (
     <View style={styles.container}>
-      <Text>ádsadsd</Text>
-     <Image source={require('../assets/images/logo.jpg') } style={{width:100,height:100}} ></Image>
-     <CustomButton label={'login'} style={{width:100,height:100}} onPress={login}></CustomButton>
+      <Image source={require('../assets/images/logo.jpg')} style={styles.img} ></Image>
     </View>
   )
 }
@@ -21,10 +22,18 @@ const WelcomScreen = () => {
 export default WelcomScreen
 
 const styles = StyleSheet.create({
-container:{
-  alignItems:'center',
-  justifyContent:'center',
-  flex:1
-}
+  container: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    flex: 1,
+    backgroundColor: Colors.White
+  },
+  img:{
+    width: 300,
+     height: 300 
+  }
 
 })
+
+
+
