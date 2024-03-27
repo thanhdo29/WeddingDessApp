@@ -12,6 +12,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ListScreen from './screens/ListScreen';
 import CartScreen from './screens/CartScreen';
 import StatisticalScreen from './screens/StatisticalScreen';
+import ListServiceScreen from './screens/ListServiceScreen';
+import ListStaffScreen from './screens/ListStaffScreen';
 
 
 
@@ -20,14 +22,16 @@ import StatisticalScreen from './screens/StatisticalScreen';
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
-    <NavigationContainer>
-      <Stack.Navigator screenOptions={{headerShown:false}}>
-        <Stack.Screen name='welcom' component={WelcomScreen}/>
-        <Stack.Screen name='login' component={LoginScreen}/>
-        <Stack.Screen name='signup' component={SignupScreen}/>
-        <Stack.Screen name='home2' component={BottonTab}/>
-      </Stack.Navigator>
-    </NavigationContainer>
+    // <NavigationContainer>
+    //   <Stack.Navigator screenOptions={{headerShown:false}}>
+    //     <Stack.Screen name='welcom' component={WelcomScreen}/>
+    //     <Stack.Screen name='login' component={LoginScreen}/>
+    //     <Stack.Screen name='signup' component={SignupScreen}/>
+    //     <Stack.Screen name='home2' component={BottonTab}/>
+    //   </Stack.Navigator>
+    // </NavigationContainer>
+    
+      <ListStaffScreen/>
   )
 }
 

@@ -21,7 +21,8 @@ const Fontsizes = {
     rd_20: 20,
     rd_10: 10,
     rd_23: 23,
-    rd_25: 25
+    rd_25: 25,
+    rd_50:50
   }
 
   const Colors={
