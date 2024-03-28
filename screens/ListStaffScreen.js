@@ -4,12 +4,24 @@ import CusomTextInputSearch from '../component/CusomTextInputSearch'
 import { Colors, Fontsizes, Radius, Spacing } from '../constants'
 import Icon from 'react-native-vector-icons/Ionicons';
 import Icon2 from 'react-native-vector-icons/FontAwesome5';
+import { useNavigation } from '@react-navigation/native';
+
 
 const ListStaffScreen = () => {
-
+  const navigation = useNavigation();
   const [data, setData] = useState([]);
 
-  const fetchData = () => {
+
+  const fetchData = async () => {
+
+
+    try {
+      let res = await fetch('http://192.168.53.9:3000/User/list');
+      let result = await res.json();
+      setData(result);
+    } catch (error) {
+      console.log(error);
+    }
 
   }
 
@@ -19,25 +31,29 @@ const ListStaffScreen = () => {
 
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.item}>
+      <TouchableOpacity style={styles.item} onPress={()=>{navigation.navigate('detailStaff', {item})}}>
         <View>
-          <Image style={styles.img} source={require('../assets/images/customer.jpg')}/>
+          <Image style={styles.img} source={require('../assets/images/customer.jpg')} />
         </View>
-        <View style={styles.infoItem}>
-          <Text style={styles.textNameService}>Đỗ Tuấn Thành</Text>
-          <Text style={styles.textPriceService}>Số điện thoại: 0123456789</Text>
-          <Text style={styles.textPriceService}>Quê quán: Thái Bình</Text>
+        <View style={styles.infoItem}>  
+          <Text style={styles.textNameService}>{item.name}</Text>
+          <Text style={styles.textPriceService}>Số điện thoại: {item.numberPhone}</Text>
+          <Text style={styles.textPriceService}>Quê quán: {item.address}</Text>
         </View>
         <TouchableOpacity style={styles.xemthem}>
           <Icon2 name="phone" color={Colors.Black} size={Fontsizes.fs_32} />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     )
   }
   return (
     <View style={styles.container}>
       <CusomTextInputSearch />
-      <FlatList />
+      <FlatList 
+        data={data}
+        keyExtractor={(item)=>item._id}
+        renderItem={(item)=>renderItem(item)}
+      />
       <TouchableOpacity style={styles.btnAdd}>
         <Icon name="add" color={Colors.White} size={Fontsizes.fs_22} />
       </TouchableOpacity>
@@ -71,11 +87,12 @@ const styles = StyleSheet.create({
   },
   item: {
     flexDirection: 'row',
-    backgroundColor: Colors.DarkOrange,
+    backgroundColor: Colors.White,
     padding: Spacing.space_15,
     borderRadius: Radius.rd_10,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-around',
+    margin:Spacing.space_12
   },
   infoItem: {
     marginLeft: Spacing.space_32,

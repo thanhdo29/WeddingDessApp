@@ -17,6 +17,9 @@ import ListStaffScreen from './screens/ListStaffScreen';
 import BillScreen from './screens/BillScreen';
 import ListJob from './screens/ListJob';
 import DetailStaffScreen from './screens/DetailStaffScreen';
+import DetailServiceScreen from './screens/DetailServiceScreen';
+
+
 
 
 
@@ -33,10 +36,11 @@ const App = () => {
         <Stack.Screen name='Service' component={ListServiceScreen}></Stack.Screen>
         <Stack.Screen name='Customer' component={ListCustomerScreen}></Stack.Screen>
         <Stack.Screen name='job' component={ListJob}/>
-        <Stack.Screen name='detailstaff' component={DetailStaffScreen}/>
+        <Stack.Screen name='detailStaff' component={DetailStaffScreen}/>
+        <Stack.Screen name='detailService' component={DetailServiceScreen}/>
+        <Stack.Screen name='listService' component={ListServiceScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
-
   )
 }
 

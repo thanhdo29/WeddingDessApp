@@ -2,21 +2,22 @@ import { Image, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'reac
 import React from 'react'
 import { Colors, Fontsizes, Spacing } from '../constants'
 
-const DetailServiceScreen = () => {
+const DetailServiceScreen = ({route}) => {
+
+  const {_id, nameService, statusService, descriptionService,priceService, img}=route.params.item
   return (
     <View style={styles.container}>
       <StatusBar translucent={true} backgroundColor="transparent" />
-      <Image style={styles.img} source={require('../assets/images/dv1.jpg')} />
+      <Image style={styles.img} source={{uri:img}} />
       <View style={{paddingHorizontal:Spacing.space_18}}>
-        <Text style={styles.nameService}>Váy cưới</Text>
-        <Text style={styles.priceService}>10.000.000 Đ</Text>
+        <Text style={styles.nameService}>{nameService}</Text>
+        <Text style={styles.priceService}>{priceService}</Text>
       </View>
       <View style={styles.space}></View>
       <View style={{paddingHorizontal:Spacing.space_18}}>
         <Text style={styles.des}>Mô tả sản phẩm</Text>
         <Text style={styles.contentDes}>
-          Váy tafta cổ yếm khoét giọt lệ tiểu thư Dilyshop là một lựa chọn hoàn hảo cho những cô nàng
-          yêu thích phong cách trẻ trung nhưng không kém phần sang trọng.
+          {descriptionService}
         </Text>
       </View>
       <TouchableOpacity style={styles.btn}>

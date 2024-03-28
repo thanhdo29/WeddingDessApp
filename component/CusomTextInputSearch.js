@@ -23,5 +23,6 @@ const styles = StyleSheet.create({
         flexDirection:'row',
         marginTop:Spacing.space_28,
         paddingHorizontal:Spacing.space_10,
+        backgroundColor:Colors.White
     }
 })
