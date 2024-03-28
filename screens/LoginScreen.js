@@ -1,5 +1,5 @@
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React from 'react'
+import { Alert, Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import React ,{useState}from 'react'
 import CustomTextInput from '../component/CustomTextInput'
 import { Colors, Fontsizes, Radius, Spacing } from '../constants'
 import CustomButton from '../component/CustomButton'
@@ -7,28 +7,66 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const LoginScreen = () => {
-  const navigation = useNavigation();
+  const [password, setpassword] = useState("")
+  const [email, setemail] = useState("")
 
-  const replaceSignup=()=>{
+  const navigation = useNavigation();
+  const login = async () => {
+    try {
+      const response = await fetch('http://192.168.1.98:3000/Login/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: email,
+          password: password,
+        })
+      });
+      const data = await response.json();
+      if(!email||!password)
+      {Alert.alert('Bạn cần nhập đầy đủ thông tin')}
+      if(password.length<6){
+        Alert.alert('mật khẩu phải lớn hơn bằng 6 ký  tự')
+      }
+      // Nếu đăng nhập thành công, chuyển hướng đến màn hình Home
+      if (response.ok) {
+        navigation.navigate('home2');
+      } else {
+        console.log(data.msg); // In thông báo lỗi từ server
+      }
+    } catch (error) {
+      console.log("Erro", error)
+    }
+
+  }
+  const replaceSignup = () => {
     navigation.navigate('signup')
   }
 
-  const doLogin=()=>{
-    navigation.navigate('home2');
-  }
+
   return (
     <View style={styles.container}>
       <View style={styles.text_welcom}>
         <Text style={{ fontSize: Fontsizes.fs_28, color: Colors.Black, fontWeight: 'bold' }}>Chào mừng bạn</Text>
         <Text style={{ fontWeight: 'bold', color: Colors.Gray, marginTop: Spacing.space_10, fontSize: Fontsizes.fs_16 }}>Đăng nhập để tiếp tục</Text>
       </View>
-      <CustomTextInput style={styles.input} label={'Tên đăng nhập'} />
-      <CustomTextInput label={'Mật khẩu'} />
+      {/* <CustomTextInput style={styles.input} label={'Tên đăng nhập'} props={text =>{setemail(text)}} value={email} />
+      <CustomTextInput label={'Mật khẩu'} value={passWord} props={text=>{setpassWord(text)}}/> */}
+      <TextInput
+        placeholder="Nhập email"
+        value={email}
+        onChangeText={text => setemail(text)}></TextInput>
+      <TextInput
+        placeholder='Nhập passWord'
+        value={password}
+        onChangeText={text =>setpassword(text)}
+      ></TextInput>
       <View style={styles.forgotPass}>
         <Text>Quên mật khẩu ?</Text>
       </View>
 
-      <CustomButton  label={'Đăng nhập'} onPress={doLogin}/>
+      <Button title="Đăng nhập" onPress={login}></Button>
 
       <View style={styles.loginOther}>
         <Text>-Hoặc-</Text>
@@ -45,7 +83,7 @@ const LoginScreen = () => {
 
       <View style={styles.registerContainer}>
         <Text style={{ color: Colors.Black }}>Bạn chưa có tài khoản ?</Text>
-        <TouchableOpacity onPress={()=>{replaceSignup()}}>
+        <TouchableOpacity onPress={() => { replaceSignup() }}>
           <Text style={styles.text_register}>Đăng ký</Text>
         </TouchableOpacity>
       </View>
