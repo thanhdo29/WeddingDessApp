@@ -55,6 +55,7 @@ const Fontsizes = {
     space_24: 24,
     space_28: 28,
     space_32: 32,
+    space_35: 35,
     space_40:40,
     space_50:50
   }

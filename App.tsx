@@ -20,8 +20,6 @@ import DetailStaffScreen from './screens/DetailStaffScreen';
 
 
 
-
-
 const App = () => {
   const Stack = createNativeStackNavigator();
   return (
@@ -38,8 +36,7 @@ const App = () => {
         <Stack.Screen name='detailstaff' component={DetailStaffScreen}/>
       </Stack.Navigator>
     </NavigationContainer>
-    
-      
+
   )
 }
 
