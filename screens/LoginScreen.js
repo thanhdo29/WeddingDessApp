@@ -4,6 +4,9 @@ import CustomTextInput from '../component/CustomTextInput'
 import { Colors, Fontsizes, Radius, Spacing } from '../constants'
 import CustomButton from '../component/CustomButton'
 import { useNavigation } from '@react-navigation/native';
+import { showMessage } from 'react-native-flash-message';
+import FlashMessage from "react-native-flash-message";
+
 
 
 const LoginScreen = () => {
@@ -12,14 +15,30 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
+  const handleInputChange = (text, field) => {
+    if (field === 'email') {
+      setEmail(text);
+    } else if (field === 'password') {
+      setPassword(text);
+    }
+  }
+
 
   const login = async () => {
     if (email === "" || password === "") {
-      Alert.alert("Thông báo",'Bạn cần nhập đầy đủ thông tin');
+      showMessage({
+        message: "Vui lòng nhập đủ thông tin",
+        type: 'warning',
+        position: 'center'
+      })
       return;
     }
     if (password.length < 6) {
-      Alert.alert("Thông báo",'Mật khẩu phải lớn hơn bằng 6 ký  tự');
+      showMessage({
+        message: "Mật khẩu phải có kí tự > 6",
+        type: 'warning',
+        position: 'center'
+      })
       return;
     }
     try {
@@ -33,14 +52,25 @@ const LoginScreen = () => {
           password: password,
         })
       });
-      
+
 
       // Nếu đăng nhập thành công, chuyển hướng đến màn hình Home
       if (response.status === 200) {
-        Alert.alert("Thông báo","Đăng nhập thành công");
+        showMessage({
+          message: 'Đăng nhập thành công',
+          type: 'success',
+          position: 'center'
+        })
         navigation.navigate('home2');
+
+
       } else {
-        Alert.alert("Thông báo","Tài khoản hoặc mật khẩu không chính xác");
+        showMessage({
+          message: 'Tài khoản hoặc mật khẩu không chính xác',
+          type: 'danger',
+          position: 'center',
+
+        })
       }
     } catch (error) {
       console.log("Erro", error)
@@ -62,25 +92,23 @@ const LoginScreen = () => {
       <CustomTextInput label={'Mật khẩu'} value={passWord} props={text=>{setpassWord(text)}}/> */}
 
 
-      <View style={styles.inputContainer} >
-        <Text>Tên đăng nhập</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(txt) => setEmail(txt)} />
-      </View>
+      <CustomTextInput
+        label={'Tên đăng nhập'}
+        props={{ secureTextEntry: false }}
+        onChangeText={(txt)=>handleInputChange(txt, 'email')}
+      />
 
-      <View style={styles.inputContainer} >
-        <Text>Mật khẩu</Text>
-        <TextInput
-          style={styles.input}
-          onChangeText={(txt) => setPassword(txt)} />
-      </View>
+      <CustomTextInput
+        label={'Mật khẩu'}
+        props={{ secureTextEntry: true }}
+        onChangeText={(txt)=>handleInputChange(txt, 'password')}
+      />
 
       <View style={styles.forgotPass}>
         <Text>Quên mật khẩu ?</Text>
       </View>
 
-      <Button title="Đăng nhập" onPress={() => login()}></Button>
+      <CustomButton label={'Đăng nhập'} onPress={login} />
 
       <View style={styles.loginOther}>
         <Text>-Hoặc-</Text>
@@ -101,6 +129,7 @@ const LoginScreen = () => {
           <Text style={styles.text_register}>Đăng ký</Text>
         </TouchableOpacity>
       </View>
+      <FlashMessage position={'bottom'} />
     </View>
   )
 }

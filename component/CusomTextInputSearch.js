@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
         borderColor:Colors.Gray,
         alignItems:'center',
         flexDirection:'row',
-        marginTop:Spacing.space_28,
+        marginTop:Spacing.space_18,
         paddingHorizontal:Spacing.space_10,
         backgroundColor:Colors.White
     }
