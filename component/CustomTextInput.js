@@ -11,7 +11,7 @@ const CustomTextInput = ({ label, props, onChangeText }) => {
     setIsPasswordVisible(!isPasswordVisible);
   };
 
-  if (props.secureTextEntry) {
+  if (props && props.secureTextEntry) {
     return (
       <View style={styles.inputContainer}>
         <Text style={styles.label}>{label}</Text>
@@ -57,6 +57,7 @@ const styles = StyleSheet.create({
     borderBottomWidth: 1,
     paddingVertical: Spacing.space_15,
     fontSize: Fontsizes.fs_18,
+    
 
   },
   eyeIcon: {

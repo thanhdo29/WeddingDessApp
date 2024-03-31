@@ -31,14 +31,16 @@ const ListStaffScreen = () => {
 
   const renderItem = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.item} onPress={()=>{navigation.navigate('detailStaff', {item})}}>
-        <View>
-          <Image style={styles.img} source={require('../assets/images/customer.jpg')} />
-        </View>
-        <View style={styles.infoItem}>  
-          <Text style={styles.textNameService}>{item.name}</Text>
-          <Text style={styles.textPriceService}>Số điện thoại: {item.numberPhone}</Text>
-          <Text style={styles.textPriceService}>Quê quán: {item.address}</Text>
+      <TouchableOpacity style={styles.item} onPress={() => { navigation.navigate('detailStaff', { item }) }}>
+        <View style={{flexDirection:'row'}}>
+          <View>
+            <Image style={styles.img} source={require('../assets/images/customer.jpg')} />
+          </View>
+          <View style={styles.infoItem}>
+            <Text style={styles.textNameService}>{item.name}</Text>
+            <Text style={styles.textPriceService}>Số điện thoại: {item.numberPhone}</Text>
+            <Text style={styles.textPriceService}>Quê quán: {item.address}</Text>
+          </View>
         </View>
         <TouchableOpacity style={styles.xemthem}>
           <Icon2 name="phone" color={Colors.Black} size={Fontsizes.fs_32} />
@@ -49,10 +51,10 @@ const ListStaffScreen = () => {
   return (
     <View style={styles.container}>
       <CusomTextInputSearch />
-      <FlatList 
+      <FlatList
         data={data}
-        keyExtractor={(item)=>item._id}
-        renderItem={(item)=>renderItem(item)}
+        keyExtractor={(item) => item._id}
+        renderItem={(item) => renderItem(item)}
       />
       <TouchableOpacity style={styles.btnAdd}>
         <Icon name="add" color={Colors.White} size={Fontsizes.fs_22} />
@@ -92,7 +94,7 @@ const styles = StyleSheet.create({
     borderRadius: Radius.rd_10,
     alignItems: 'center',
     justifyContent: 'space-around',
-    margin:Spacing.space_12
+    margin: Spacing.space_12
   },
   infoItem: {
     marginLeft: Spacing.space_32,
@@ -108,7 +110,6 @@ const styles = StyleSheet.create({
     marginTop: Spacing.space_8
   },
   xemthem: {
-    flex: 1,
     marginLeft: 200
   }
 })

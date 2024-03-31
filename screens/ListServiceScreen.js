@@ -23,27 +23,24 @@ const ListServiceScreen = () => {
   const [selectedService, setSelectedService] = useState(null);
 
 
-
-  const handleServiceNameChange = (value) => {
-    setServiceName(value);
-  };
-
-  const handleServicePriceChange = (value) => {
-    setServicePrice(value);
-  };
-  const handleServiceImgChange = (value) => {
-    setServiceImg(value)
-  };
-  const handleServiceDesChange = (value) => {
-    setServiceDes(value)
-  };
+  const handleTextInputChange = (text, field) => {
+    if (field === "name") {
+      setServiceName(text)
+    } else if (field === "price") {
+      setServicePrice(text)
+    } else if (field === "img") {
+      setServiceImg(text)
+    } else if (field === "des") {
+      setServiceDes(text)
+    }
+  }
 
   const handleAddService = async () => {
     if (serviceName === "" || servicePrice === "" || serviceDes === "") {
       Alert.alert("Thông báo", 'Vui lòng nhập đủ thông tin')
       return;
     }
-    let res = await fetch('http://10.23.0.47:3000/Service/add', {
+    let res = await fetch('http://192.168.53.9:3000/Service/add', {
       method: "POST",
       headers: {
         Accept: 'application/json',
@@ -134,18 +131,21 @@ const ListServiceScreen = () => {
       <TouchableOpacity style={styles.item} onPress={() => {
         navigation.navigate('detailService', { item })
       }}>
-        <View>
-          <Image style={styles.img} source={{ uri: item.img }} />
-        </View>
-        <View style={styles.infoItem}>
+        <View style={{ flexDirection: 'row' }}>
           <View>
-            <Text style={styles.textNameService}>{item.nameService}</Text>
-            <Text style={styles.textPriceService}>{item.priceService}</Text>
+            <Image style={styles.img} source={{ uri: item.img }} />
           </View>
-          <TouchableOpacity style={styles.xemthem} onPress={() => { doUpdateService(), setSelectedService(item) }}>
-            <Text>Thay đổi dịch vụ</Text>
-          </TouchableOpacity>
+          <View style={styles.infoItem}>
+            <View>
+              <Text style={styles.textNameService}>{item.nameService}</Text>
+              <Text style={styles.textPriceService}>{item.priceService}</Text>
+            </View>
+
+          </View>
         </View>
+        <TouchableOpacity style={styles.xemthem} onPress={() => { doUpdateService(), setSelectedService(item) }}>
+          <Text>Thay đổi dịch vụ</Text>
+        </TouchableOpacity>
 
       </TouchableOpacity>
     )
@@ -187,13 +187,13 @@ const ListServiceScreen = () => {
             <View style={{ alignItems: 'center' }}>
               <Text style={{ color: Colors.Black, fontWeight: '600', fontSize: Fontsizes.fs_28 }}>Thêm dịch vụ</Text>
             </View>
-            <CustomTextInput label={'Tên dịch vụ'} onChangeText={handleServiceNameChange} props={{ secureTextEntry: false, }} />
-            <CustomTextInput label={'Giá dịch vụ'} props={{ keyboardType: 'numeric' }} onChangeText={handleServicePriceChange} />
-            <CustomTextInput label={'Ảnh'} onChangeText={handleServiceImgChange} props={{ secureTextEntry: false }} />
+            <CustomTextInput label={'Tên dịch vụ'} onChangeText={(txt) => { handleTextInputChange(txt, "name") }} props={{ secureTextEntry: false, }} />
+            <CustomTextInput label={'Giá dịch vụ'} props={{ keyboardType: 'numeric' }} onChangeText={(txt) => { handleTextInputChange(txt, "price") }} />
+            <CustomTextInput label={'Ảnh'} onChangeText={(txt) => { handleTextInputChange(txt, "img") }} props={{ secureTextEntry: false }} />
             <View style={styles.descriptionContainer}>
               <Text style={styles.descriptionLabel}>Mô tả sản phẩm:</Text>
               <TextInput
-                onChangeText={handleServiceDesChange}
+                onChangeText={(txt) => { handleTextInputChange(txt, "des") }}
                 style={styles.descriptionInput}
                 multiline={true}
                 numberOfLines={4}
@@ -220,13 +220,13 @@ const ListServiceScreen = () => {
             <View style={{ alignItems: 'center' }}>
               <Text style={{ color: Colors.Black, fontWeight: '600', fontSize: Fontsizes.fs_28 }}>Sửa dịch vụ</Text>
             </View>
-            <CustomTextInput label={'Tên dịch vụ'} onChangeText={handleServiceNameChange} props={{ secureTextEntry: false, defaultValue: `${selectedService?.nameService}` }} />
-            <CustomTextInput label={'Giá dịch vụ'} props={{ keyboardType: 'numeric', defaultValue: `${selectedService?.priceService}` }} onChangeText={handleServicePriceChange} />
-            <CustomTextInput label={'Ảnh'} onChangeText={handleServiceImgChange} props={{ secureTextEntry: false, defaultValue: `${selectedService?.img}` }} />
+            <CustomTextInput label={'Tên dịch vụ'} onChangeText={(txt) => { handleTextInputChange(txt, "name") }} props={{ secureTextEntry: false, defaultValue: `${selectedService?.nameService}` }} />
+            <CustomTextInput label={'Giá dịch vụ'} props={{ keyboardType: 'numeric', defaultValue: `${selectedService?.priceService}` }} onChangeText={(txt) => { handleTextInputChange(txt, "price") }} />
+            <CustomTextInput label={'Ảnh'} onChangeText={(txt) => { handleTextInputChange(txt, "img") }} props={{ secureTextEntry: false, defaultValue: `${selectedService?.img}` }} />
             <View style={styles.descriptionContainer}>
               <Text style={styles.descriptionLabel}>Mô tả sản phẩm:</Text>
               <TextInput
-                onChangeText={handleServiceDesChange}
+                onChangeText={(txt) => { handleTextInputChange(txt, "des") }}
                 style={styles.descriptionInput}
                 multiline={true}
                 numberOfLines={4}
@@ -274,14 +274,13 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.White,
     padding: Spacing.space_15,
     borderRadius: Radius.rd_10,
-    margin: Spacing.space_10
+    margin: Spacing.space_10,
+    justifyContent: 'space-between'
   },
   infoItem: {
     marginLeft: Spacing.space_32,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '100%',
-
   },
   textNameService: {
     fontSize: Fontsizes.fs_22,
@@ -293,9 +292,7 @@ const styles = StyleSheet.create({
     marginTop: Spacing.space_8
   },
   xemthem: {
-    justifyContent: 'flex-end',
-    flex: 1,
-    marginLeft: 200
+    justifyContent: 'flex-end'
   },
   centeredView: {
     flex: 1,

@@ -25,6 +25,7 @@ const LoginScreen = () => {
 
 
   const login = async () => {
+    navigation.navigate('home2');
     if (email === "" || password === "") {
       showMessage({
         message: "Vui lòng nhập đủ thông tin",
@@ -61,7 +62,7 @@ const LoginScreen = () => {
           type: 'success',
           position: 'center'
         })
-        navigation.navigate('home2');
+        
 
 
       } else {
