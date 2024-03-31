@@ -21,6 +21,7 @@ const ListServiceScreen = () => {
   const [serviceDes, setServiceDes] = useState('');
   const [modalUpdate, setModalUpdate] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const [searchKeyword, setSearchKeyword] = useState('');
 
 
   const handleTextInputChange = (text, field) => {
@@ -32,8 +33,14 @@ const ListServiceScreen = () => {
       setServiceImg(text)
     } else if (field === "des") {
       setServiceDes(text)
+    } else if (field === "search") {
+      setSearchKeyword(text)
     }
   }
+
+  // const filteredDataService=data.filter(item=>{
+  //   return item.toLowerCase().includes(searchKeyword.toLowerCase());
+  // })
 
   const handleAddService = async () => {
     if (serviceName === "" || servicePrice === "" || serviceDes === "") {
@@ -162,13 +169,18 @@ const ListServiceScreen = () => {
       <TouchableOpacity style={styles.back} onPress={() => back()}>
         <Icon1 name="arrowleft" color={Colors.Black} size={Fontsizes.fs_22} />
       </TouchableOpacity>
-      <CusomTextInputSearch />
+      <CusomTextInputSearch onChangeText={(txt) => handleTextInputChange(txt, "search")} props={{ value: searchKeyword }} />
 
       <FlatList
-        data={data}
+        data={data.filter(item =>
+          item.nameService &&
+          typeof item.nameService === 'string' &&
+          item.nameService.toLowerCase().includes(searchKeyword.toLowerCase())
+        )}
         keyExtractor={(item) => item._id}
-        renderItem={(item) => renderItem(item)}
+        renderItem={renderItem}
       />
+
 
       <TouchableOpacity style={styles.btnAdd} onPress={() => doAddService()}>
         <Icon name="add" color={Colors.White} size={Fontsizes.fs_22} />

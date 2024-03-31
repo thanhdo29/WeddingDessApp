@@ -11,10 +11,9 @@ const ListStaffScreen = () => {
   const navigation = useNavigation();
   const [data, setData] = useState([]);
 
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   const fetchData = async () => {
-
-
     try {
       let res = await fetch('http://192.168.53.9:3000/User/list');
       let result = await res.json();
@@ -27,6 +26,7 @@ const ListStaffScreen = () => {
 
   useEffect(() => {
     fetchData();
+    console.log(data);
   }, [])
 
   const renderItem = ({ item }) => {
@@ -48,11 +48,19 @@ const ListStaffScreen = () => {
       </TouchableOpacity>
     )
   }
+
+  const handleTextInputChange=(text,field)=>{
+    if (field==='search') {
+      setSearchKeyword(text)
+    }
+  }
   return (
     <View style={styles.container}>
-      <CusomTextInputSearch />
+      <CusomTextInputSearch onChangeText={(txt)=>handleTextInputChange(txt, 'search')} props={{value: searchKeyword}}/>
       <FlatList
-        data={data}
+        data={data.filter(item=>
+          item.name&& typeof item.name==='string'&& item.name.toLowerCase().includes(searchKeyword.toLocaleLowerCase())
+        )}
         keyExtractor={(item) => item._id}
         renderItem={(item) => renderItem(item)}
       />
