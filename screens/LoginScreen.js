@@ -25,7 +25,7 @@ const LoginScreen = () => {
 
 
   const login = async () => {
-    navigation.navigate('home2');
+
     if (email === "" || password === "") {
       showMessage({
         message: "Vui lòng nhập đủ thông tin",
@@ -62,8 +62,8 @@ const LoginScreen = () => {
           type: 'success',
           position: 'center'
         })
-        
 
+        navigation.navigate('home2');
 
       } else {
         showMessage({
@@ -96,13 +96,13 @@ const LoginScreen = () => {
       <CustomTextInput
         label={'Tên đăng nhập'}
         props={{ secureTextEntry: false }}
-        onChangeText={(txt)=>handleInputChange(txt, 'email')}
+        onChangeText={(txt) => handleInputChange(txt, 'email')}
       />
 
       <CustomTextInput
         label={'Mật khẩu'}
         props={{ secureTextEntry: true }}
-        onChangeText={(txt)=>handleInputChange(txt, 'password')}
+        onChangeText={(txt) => handleInputChange(txt, 'password')}
       />
 
       <View style={styles.forgotPass}>

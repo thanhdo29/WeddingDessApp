@@ -13,9 +13,7 @@ import BillScreen from './screens/BillScreen';
 import ListJob from './screens/ListJob';
 import DetailStaffScreen from './screens/DetailStaffScreen';
 import DetailServiceScreen from './screens/DetailServiceScreen';
-import Date from './screens/Date';
 import BottomTab from './navigation/BottonTab';
-import Date1 from './screens/Date';
 
 
 
@@ -39,7 +37,6 @@ const App = () => {
         <Stack.Screen name='Customer' component={ListCustomerScreen}/>
       </Stack.Navigator>
      </NavigationContainer>
-    // <Date1/>
   )
 }
 
