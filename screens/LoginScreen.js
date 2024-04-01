@@ -12,6 +12,14 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
   const login = async () => {
+    if(!email||!password)
+    {Alert.alert('Bạn cần nhập đầy đủ thông tin')
+  return
+  }
+    if(password.length<6){
+      Alert.alert('mật khẩu phải lớn hơn bằng 6 ký  tự')
+      return
+    }
     try {
       const response = await fetch('http://192.168.1.98:3000/Login/login', {
         method: 'POST',
@@ -24,19 +32,23 @@ const LoginScreen = () => {
         })
       });
       const data = await response.json();
-      if(!email||!password)
-      {Alert.alert('Bạn cần nhập đầy đủ thông tin')}
-      if(password.length<6){
-        Alert.alert('mật khẩu phải lớn hơn bằng 6 ký  tự')
+      if(response.status===401){
+        Alert.alert("Tài khoản không tồn tại")
+        return
       }
+     if(response.status===300){
+      Alert.alert("Mật khẩu không chính xác")
+      return
+     }
       // Nếu đăng nhập thành công, chuyển hướng đến màn hình Home
-      if (response.ok) {
+      if (response.status===200) {
+        Alert.alert("Đăng nhập thành công")
         navigation.navigate('home2');
       } else {
         console.log(data.msg); // In thông báo lỗi từ server
       }
     } catch (error) {
-      console.log("Erro", error)
+      console.log("Erroádsadsadsd", error)
     }
 
   }
