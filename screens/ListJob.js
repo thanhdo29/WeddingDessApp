@@ -40,7 +40,7 @@ const ListJob = () => {
 
   const fetchDataStaff = async () => {
     try {
-      let res = await fetch('http://192.168.53.9:3000/User/list');
+      let res = await fetch('http://10.24.9.134:3000/User/list');
       let result = await res.json();
       setDataStaff(result);
       setLoading(false);

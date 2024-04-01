@@ -47,7 +47,7 @@ const ListServiceScreen = () => {
       Alert.alert("Thông báo", 'Vui lòng nhập đủ thông tin')
       return;
     }
-    let res = await fetch('http://192.168.53.9:3000/Service/add', {
+    let res = await fetch('http://10.24.9.134:3000/Service/add', {
       method: "POST",
       headers: {
         Accept: 'application/json',
@@ -82,7 +82,7 @@ const ListServiceScreen = () => {
         return;
       }
 
-      const res = await fetch('http://192.168.53.9:3000/Service/put/' + item._id, {
+      const res = await fetch('http://10.24.9.134:3000/Service/put/' + item._id, {
 
         method: "PUT",
         headers: {
@@ -112,7 +112,7 @@ const ListServiceScreen = () => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://192.168.53.9:3000/Service/list');
+      let res = await fetch('http://10.24.9.134:3000/Service/list');
       let result = await res.json();
       setData(result);
     } catch (error) {
