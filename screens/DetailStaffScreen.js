@@ -3,49 +3,60 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/AntDesign'
 import Icon1 from 'react-native-vector-icons/Ionicons'
 import { useNavigation } from '@react-navigation/native'
+import { Colors, Fontsizes, Spacing } from '../constants'
 
-const DetailStaffScreen = () => {
+const DetailStaffScreen = ({route}) => {
   const navigation = useNavigation();
-  const backhome2 =()=>{
-    navigation.navigate('home2')
+  const {_id, name, email, password,role, address, numberPhone,status}=route.params.item
+  const backhome2 = () => {
+    navigation.goBack()
   }
   return (
-    <View >
-      <TouchableOpacity
-      
-      onPress={backhome2}
-      >
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={backhome2}>
+          <Icon name="left" size={20} color="black" style={{ padding: 10 }}></Icon>
+        </TouchableOpacity>
+        <Text style={{ color: Colors.Black, fontSize: Fontsizes.fs_22 }}>Hồ sơ cá nhân</Text>
 
-        <Icon name="back" size={30} color="black" style={{padding:10}}></Icon>
-      </TouchableOpacity>
-      <View style={{ alignItems: 'center',marginTop:30 }}>
-
-        <Text>Hồ sơ cá nhân</Text>
-        <Icon1 name="person" size={20} color="black" ></Icon1>
-        <Text>xxx@gmail.com</Text>
-        <Text>012345677</Text>
+      </View>
+      <View style={{ alignItems: 'center', marginTop: 30 }}>
+        <Icon1 name="person" size={75} color="black" ></Icon1>
+        <Text style={styles.textname}>{name}</Text>
+        <Text>{email}</Text>
+        <Text>{numberPhone}</Text>
       </View>
 
-      <View style={{flexDirection:'row',justifyContent:'space-between',padding:10,marginTop:30}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10, marginTop: 30 }}>
         <Text>Tên</Text>
         <Text>Nghề nghiệp</Text>
       </View>
-      <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
         <Text>NGuyễn Văn A</Text>
         <Text>Cắt tóc</Text>
       </View>
-      <View style={{flexDirection:'row',justifyContent:'space-between',padding:10,marginTop:30}}>
-        <Text>Ngân Hàng</Text>
+
+      <View style={styles.line}></View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10, marginTop: 30 }}>
+        <Text>Ngân hàng </Text>
         <Text>Số tài khoản</Text>
-        
+
       </View>
-      <View style={{flexDirection:'row',justifyContent:'space-between',padding:10}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
         <Text>MB</Text>
         <Text>9999999999999</Text>
-        
+
       </View>
-      <View style={{padding:10,marginTop:30}}>
-        <Text>Doanh thu</Text>
+      <View style={styles.line}></View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10, marginTop: 30 }}>
+        <Text>Số điện thoại</Text>
+        <Text>Quê quán</Text>
+
+      </View>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 10 }}>
+        <Text>{numberPhone}</Text>
+        <Text>{address}</Text>
+
       </View>
     </View>
   )
@@ -53,4 +64,26 @@ const DetailStaffScreen = () => {
 
 export default DetailStaffScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    paddingTop: Spacing.space_10,
+    backgroundColor: Colors.White
+  },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    width: '60%',
+    justifyContent: 'space-between'
+  },
+  textname: {
+    fontSize: Fontsizes.fs_20,
+    color: Colors.Black,
+    fontWeight: '500'
+  },
+  line: {
+    height: 2,
+    backgroundColor: Colors.Medium_Gray,
+    width: '100%'
+  }
+})

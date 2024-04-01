@@ -38,7 +38,8 @@ const Fontsizes = {
     VividOrange: '#FD6A00',
     Red: '#E53935',
     Green: '#07FF02',
-    Pink:'#F57F9C'
+    Pink:'#F57F9C',
+    Medium_pink:'#FFC8D6'
   }
 
   const Spacing={

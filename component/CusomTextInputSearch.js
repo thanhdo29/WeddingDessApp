@@ -3,11 +3,11 @@ import React from 'react'
 import Icon from 'react-native-vector-icons/Fontisto';
 import { Colors, Fontsizes, Radius, Spacing } from '../constants';
 
-const CusomTextInputSearch = ({props}) => {
+const CusomTextInputSearch = ({props, onChangeText}) => {
     return (
         <View style={styles.containerInput}>
             <Icon name="search" color={Colors.Gray} size={Fontsizes.fs_22} />
-            <TextInput {...props} placeholder='Tìm kiếm' />
+            <TextInput {...props} placeholder='Tìm kiếm' onChangeText={onChangeText}/>
         </View>
     )
 }
@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
         borderColor:Colors.Gray,
         alignItems:'center',
         flexDirection:'row',
-        marginTop:Spacing.space_28,
+        marginTop:Spacing.space_18,
         paddingHorizontal:Spacing.space_10,
+        backgroundColor:Colors.White
     }
 })

@@ -1,27 +1,51 @@
 import { Alert, Button, Image, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
-import React ,{useState}from 'react'
+import React, { useState } from 'react'
 import CustomTextInput from '../component/CustomTextInput'
 import { Colors, Fontsizes, Radius, Spacing } from '../constants'
 import CustomButton from '../component/CustomButton'
 import { useNavigation } from '@react-navigation/native';
+import { showMessage } from 'react-native-flash-message';
+import FlashMessage from "react-native-flash-message";
+
 
 
 const LoginScreen = () => {
-  const [password, setpassword] = useState("")
-  const [email, setemail] = useState("")
+  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("")
 
   const navigation = useNavigation();
-  const login = async () => {
-    if(!email||!password)
-    {Alert.alert('Bạn cần nhập đầy đủ thông tin')
-  return
+
+  const handleInputChange = (text, field) => {
+    if (field === 'email') {
+      setEmail(text);
+    } else if (field === 'password') {
+      setPassword(text);
+    }
   }
-    if(password.length<6){
-      Alert.alert('mật khẩu phải lớn hơn bằng 6 ký  tự')
-      return
+
+
+  const login = async () => {
+
+    navigation.navigate('home2');
+    if (email === "" || password === "") {
+      showMessage({
+        message: "Vui lòng nhập đủ thông tin",
+        type: 'warning',
+        position: 'center'
+      })
+      return;
+    }
+    if (password.length < 6) {
+      showMessage({
+        message: "Mật khẩu phải có kí tự > 6",
+        type: 'warning',
+        position: 'center'
+      })
+      return;
+
     }
     try {
-      const response = await fetch('http://192.168.1.98:3000/Login/login', {
+      const response = await fetch('http://10.24.9.134:3000/Login/list_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -31,21 +55,27 @@ const LoginScreen = () => {
           password: password,
         })
       });
-      const data = await response.json();
-      if(response.status===401){
-        Alert.alert("Tài khoản không tồn tại")
-        return
-      }
-     if(response.status===300){
-      Alert.alert("Mật khẩu không chính xác")
-      return
-     }
+
+
+
       // Nếu đăng nhập thành công, chuyển hướng đến màn hình Home
-      if (response.status===200) {
-        Alert.alert("Đăng nhập thành công")
-        navigation.navigate('home2');
+      if (response.status === 200) {
+        showMessage({
+          message: 'Đăng nhập thành công',
+          type: 'success',
+          position: 'center'
+        })
+
+        
+
+
       } else {
-        console.log(data.msg); // In thông báo lỗi từ server
+        showMessage({
+          message: 'Tài khoản hoặc mật khẩu không chính xác',
+          type: 'danger',
+          position: 'center',
+
+        })
       }
     } catch (error) {
       console.log("Erroádsadsadsd", error)
@@ -65,20 +95,25 @@ const LoginScreen = () => {
       </View>
       {/* <CustomTextInput style={styles.input} label={'Tên đăng nhập'} props={text =>{setemail(text)}} value={email} />
       <CustomTextInput label={'Mật khẩu'} value={passWord} props={text=>{setpassWord(text)}}/> */}
-      <TextInput
-        placeholder="Nhập email"
-        value={email}
-        onChangeText={text => setemail(text)}></TextInput>
-      <TextInput
-        placeholder='Nhập passWord'
-        value={password}
-        onChangeText={text =>setpassword(text)}
-      ></TextInput>
+
+
+      <CustomTextInput
+        label={'Tên đăng nhập'}
+        props={{ secureTextEntry: false }}
+        onChangeText={(txt) => handleInputChange(txt, 'email')}
+      />
+
+      <CustomTextInput
+        label={'Mật khẩu'}
+        props={{ secureTextEntry: true }}
+        onChangeText={(txt) => handleInputChange(txt, 'password')}
+      />
+
       <View style={styles.forgotPass}>
         <Text>Quên mật khẩu ?</Text>
       </View>
 
-      <Button title="Đăng nhập" onPress={login}></Button>
+      <CustomButton label={'Đăng nhập'} onPress={login} />
 
       <View style={styles.loginOther}>
         <Text>-Hoặc-</Text>
@@ -99,6 +134,7 @@ const LoginScreen = () => {
           <Text style={styles.text_register}>Đăng ký</Text>
         </TouchableOpacity>
       </View>
+      <FlashMessage position={'bottom'} />
     </View>
   )
 }
@@ -159,5 +195,23 @@ const styles = StyleSheet.create({
     color: Colors.Black,
     fontWeight: "700",
     marginLeft: 4
+  },
+
+
+
+  inputContainer: {
+    position: "relative",
+    justifyContent: 'center',
+    marginTop: Spacing.space_24
+  },
+  label: {
+    color: Colors.Gray,
+    fontSize: Fontsizes.fs_20,
+    fontWeight: '600'
+  },
+  input: {
+    borderBottomWidth: 1,
+    paddingVertical: Spacing.space_15,
+    fontSize: Fontsizes.fs_18
   }
 })
