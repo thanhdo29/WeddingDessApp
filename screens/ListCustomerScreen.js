@@ -13,11 +13,14 @@ import CustomButton from '../component/CustomButton';
 const ListCustomerScreen = () => {
   const navigation = useNavigation();
   const [modalAdd, setModalAdd] = useState(false);
+  const [modalUpdate, setModalUpdate] = useState(false);
   const [data, setData] = useState([]);
 
   const [name, setName] = useState('');
   const [numberPhone, setNumberPhone] = useState('');
   const [address, setAddress] = useState('');
+  const [searchKeyword, setSearchKeyword] = useState('');
+  const [selectedItem, setSelectedItem] = useState(null);
 
   const handleInputChange = (text, field) => {
     if (field === "name") {
@@ -26,6 +29,8 @@ const ListCustomerScreen = () => {
       setNumberPhone(text);
     } else if (field === "address") {
       setAddress(text);
+    } else if (field === "search") {
+      setSearchKeyword(text)
     }
   }
 
@@ -39,9 +44,9 @@ const ListCustomerScreen = () => {
     }
   }
 
-  const addCustomer = async () => {
+  const handleAddCustomer = async () => {
 
-    if (name==="" || numberPhone==="" || address==="") {
+    if (name === "" || numberPhone === "" || address === "") {
       Alert.alert("Thông báo", "Vui lòng nhập đủ thông tin");
       return;
     }
@@ -52,14 +57,14 @@ const ListCustomerScreen = () => {
           Accept: 'application/json',
           'Content-Type': 'application/json',
         },
-        body: ({
-          nameCustomer:name,
-          numberphone:numberPhone,
-          address:address
+        body: JSON.stringify({
+          nameCustomer: name,
+          numberphone: numberPhone,
+          address: address
         })
       })
 
-      if (res.status===200) {
+      if (res.status === 200) {
         Alert.alert("Thêm thành công");
         setModalAdd(false);
         fetchData();
@@ -72,25 +77,63 @@ const ListCustomerScreen = () => {
     }
   }
 
+  const handleUpdateCustomer = async (item) => {
+    if (name === "" || numberPhone === "" || address === "") {
+      Alert.alert("Thông báo", "Vui lòng nhập đủ thông tin");
+      return;
+    }
+
+    try {
+      let res = await fetch('http://192.168.53.9:3000/Customer/put/' + item._id, {
+        method: "PUT",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          nameCustomer:name,
+          numberphone:numberPhone,
+          address:address
+        })
+      })
+
+      if (res.status===200) {
+        Alert.alert("Sửa thành công");
+        setModalUpdate(false)
+        fetchData()
+      }else{
+        Alert.alert("Sửa thất bại");
+        setModalUpdate(false);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+    
+  }
+
   useEffect(() => {
     fetchData();
+    console.log(data);
   }, [])
 
   const renderItem = ({ item }) => {
     return (
-      <View style={styles.item}>
-        <View>
-          <Image style={styles.img} source={require('../assets/images/customer.jpg')} />
-        </View>
-        <View style={styles.infoItem}>
-          <Text style={styles.textNameService}>{item.nameCustomer}</Text>
-          <Text style={styles.textPriceService}>Số điện thoại: {item.numberphone}</Text>
-          <Text style={styles.textPriceService}>Quê quán: {item.address}</Text>
+      <TouchableOpacity style={styles.item1} onPress={() => { setModalUpdate(true), setSelectedItem(item) }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <View>
+            <Image style={styles.img} source={require('../assets/images/customer.jpg')} />
+          </View>
+          <View style={styles.infoItem}>
+            <Text style={styles.textNameService}>{item.nameCustomer}</Text>
+            <Text style={styles.textPriceService}>Số điện thoại: {item.numberphone}</Text>
+            <Text style={styles.textPriceService}>Quê quán: {item.address}</Text>
+          </View>
         </View>
         <TouchableOpacity style={styles.xemthem}>
           <Icon2 name="phone" color={Colors.Black} size={Fontsizes.fs_32} />
         </TouchableOpacity>
-      </View>
+      </TouchableOpacity>
     )
   }
   const back = () => {
@@ -104,11 +147,11 @@ const ListCustomerScreen = () => {
       <TouchableOpacity style={styles.back} onPress={() => back()}>
         <Icon1 name="arrowleft" color={Colors.Black} size={Fontsizes.fs_22} />
       </TouchableOpacity>
-      <CusomTextInputSearch />
+      <CusomTextInputSearch onChangeText={(txt) => handleInputChange(txt, "search")} />
       <FlatList
-        data={data}
-        keyExtractor={(item)=>item._id}
-        renderItem={(item)=>renderItem(item)}
+        data={data.filter(item => item.nameCustomer && typeof item.nameCustomer === 'string' && item.nameCustomer.toLowerCase().includes(searchKeyword.toLowerCase()))}
+        keyExtractor={(item) => item._id}
+        renderItem={(item) => renderItem(item)}
       />
       <TouchableOpacity style={styles.btnAdd} onPress={() => { setModalAdd(true) }}>
         <Icon name="add" color={Colors.White} size={Fontsizes.fs_22} />
@@ -126,10 +169,31 @@ const ListCustomerScreen = () => {
             <View style={{ alignItems: 'center' }}>
               <Text style={{ color: Colors.Black, fontWeight: '600', fontSize: Fontsizes.fs_28 }}>Thêm khách hàng</Text>
             </View>
-            <CustomTextInput label={'Tên khách hàng'} onChangeText={(txt)=>handleInputChange(txt, 'name')}/>
-            <CustomTextInput label={'Địa chỉ'} onChangeText={(txt)=>handleInputChange(txt, 'numberPhone')}/>
-            <CustomTextInput label={'Số điện thoại'} onChangeText={(txt)=>handleInputChange(txt, 'address')}/>
-            <CustomButton label={'Xác nhận'} onPress={()=>addCustomer}/>
+            <CustomTextInput label={'Tên khách hàng'} onChangeText={(txt) => handleInputChange(txt, 'name')} />
+            <CustomTextInput label={'Địa chỉ'} onChangeText={(txt) => handleInputChange(txt, 'address')} />
+            <CustomTextInput label={'Số điện thoại'} onChangeText={(txt) => handleInputChange(txt, 'numberPhone')} />
+            <CustomButton label={'Xác nhận'} onPress={() => handleAddCustomer()} />
+          </View>
+        </View>
+      </Modal>
+
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalUpdate}
+        onRequestClose={() => {
+
+          setModalUpdate(!modalUpdate);
+        }}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <View style={{ alignItems: 'center' }}>
+              <Text style={{ color: Colors.Black, fontWeight: '600', fontSize: Fontsizes.fs_28 }}>Sửa khách hàng</Text>
+            </View>
+            <CustomTextInput label={'Tên khách hàng'} onChangeText={(txt) => handleInputChange(txt, 'name')} props={{ defaultValue: selectedItem?.nameCustomer }} />
+            <CustomTextInput label={'Địa chỉ'} onChangeText={(txt) => handleInputChange(txt, 'address')} props={{ defaultValue: selectedItem?.address }} />
+            <CustomTextInput label={'Số điện thoại'} onChangeText={(txt) => handleInputChange(txt, 'numberPhone')} props={{ defaultValue: selectedItem?.numberphone }} />
+            <CustomButton label={'Xác nhận'} onPress={() => handleUpdateCustomer(selectedItem)}/>
           </View>
         </View>
       </Modal>
@@ -143,7 +207,8 @@ export default ListCustomerScreen
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingHorizontal: Spacing.space_20
+    paddingHorizontal: Spacing.space_20,
+    backgroundColor: Colors.Medium_Gray
   },
   btnAdd: {
     backgroundColor: Colors.Pink,
@@ -160,13 +225,14 @@ const styles = StyleSheet.create({
     width: 80,
     height: 81
   },
-  item: {
+  item1: {
     flexDirection: 'row',
-    backgroundColor: Colors.DarkOrange,
-    padding: Spacing.space_15,
-    borderRadius: Radius.rd_10,
+    padding: Spacing.space_10,
+    borderRadius: Radius.rd_15,
     alignItems: 'center',
-    justifyContent: 'space-around'
+    justifyContent: 'space-between',
+    margin: Spacing.space_15,
+    backgroundColor: Colors.White,
   },
   infoItem: {
     marginLeft: Spacing.space_32,
@@ -182,8 +248,6 @@ const styles = StyleSheet.create({
     marginTop: Spacing.space_8
   },
   xemthem: {
-    flex: 1,
-    marginLeft: 200
   },
   back: {
     marginTop: Spacing.space_16

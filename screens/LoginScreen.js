@@ -43,7 +43,7 @@ const LoginScreen = () => {
       return;
     }
     try {
-      const response = await fetch('http://10.24.9.134:3000/Login/list_user', {
+      const response = await fetch('http://192.168.53.9:3000/Login/list_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

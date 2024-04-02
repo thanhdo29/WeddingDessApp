@@ -89,14 +89,16 @@ const SettingScreen = () => {
                     }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Text style={{ fontSize: Fontsizes.fs_24, color: Colors.Black, fontWeight: '600'}}>Đổi mật khẩu</Text>
+                            <View style={{alignItems:'center'}}>
+                                <Text style={{ fontSize: Fontsizes.fs_24, color: Colors.Black, fontWeight: '600' }}>Đổi mật khẩu</Text>
+                            </View>
                             <CustomTextInput
                                 label={'Mật khẩu'}
                                 props={{ secureTextEntry: true }}
-                                
-                            />                            
-                            <CustomTextInput label={'Mật khẩu mới'} props={{ secureTextEntry: true }}/>
-                            <CustomTextInput label={'Nhập lại mật khẩu'} props={{ secureTextEntry: true }}/>
+
+                            />
+                            <CustomTextInput label={'Mật khẩu mới'} props={{ secureTextEntry: true }} />
+                            <CustomTextInput label={'Nhập lại mật khẩu'} props={{ secureTextEntry: true }} />
                         </View>
                     </View>
                 </Modal>
@@ -163,8 +165,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
-        paddingHorizontal:Spacing.space_35,
-        alignItems:'center'
+        paddingHorizontal: Spacing.space_35,
+        width: '80%'
     },
 
     viewModal: {
