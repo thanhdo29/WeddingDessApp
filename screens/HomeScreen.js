@@ -8,25 +8,11 @@ import Swiper from 'react-native-swiper'
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [data, setdata] = useState([])
-  const navigateToDetailService = (service) => {
-    navigation.navigate('detailService', { service });
-  }
-  //item
-  // const RenderitemService =({data,onpress})=>{
-  //   return(
-  //     <View>
-  //     <TouchableOpacity key={data._id} onPress={onpress}>
-  //       <Image source={{uri:data.img}} style={{width:100,height:100}}></Image>
-  //       <Text>{data.nameService}</Text>
-  //       <Text>{data.priceService}</Text>
-  //     </TouchableOpacity>
-  //     <Button title='Thêm vào giỏ hàng' ></Button>
-  //     </View>
-  //   )
-  // }
-  //slide 
+  const navigateToDetailService = (item) => {
+    navigation.navigate('detailService', { item });
 
-  //Data
+  }
+ 
   const fetchData = async () => {
     try {
       let res = await fetch('http://192.168.1.98:3000/Service/list');
@@ -51,12 +37,10 @@ const HomeScreen = () => {
       </View>
       < Text style={styles.sectionTitle}>Hot Products</Text>
       <Swiper autoplay={true} autoplayTimeout={1}>
-        {data.map((service, index) => (
+        {data.map((service) => (
           <View key={service._id} style={styles.productItem}>
-            <TouchableOpacity
             
-            onPress={()=>navigateToDetailService(service)}
-            
+            <TouchableOpacity    onPress={()=>navigateToDetailService(service)}
           >
             <Image source={{ uri: service.img }} style={{ width: 300, height: 300, alignItems: 'center' }}></Image>
             <Text >{service.nameService}</Text>

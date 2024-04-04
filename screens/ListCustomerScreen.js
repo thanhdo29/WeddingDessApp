@@ -31,7 +31,7 @@ const ListCustomerScreen = () => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://192.168.53.9:3000/Customer/list');
+      let res = await fetch('http://192.168.1.98:3000/Customer/list');
       let result = await res.json();
       setData(result);
     } catch (error) {
@@ -46,7 +46,7 @@ const ListCustomerScreen = () => {
       return;
     }
     try {
-      let res = await fetch('http://192.168.53.9:3000/Customer/add', {
+      let res = await fetch('http://192.168.1.98:3000/Customer/add', {
         method: "POST",
         headers: {
           Accept: 'application/json',
