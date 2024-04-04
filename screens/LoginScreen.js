@@ -14,6 +14,9 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
+  const link_api="http://192.168.54.9:3000/";
+
+
   const handleInputChange = (text, field) => {
     if (field === 'email') {
       setEmail(text);
@@ -42,7 +45,7 @@ const LoginScreen = () => {
     }
 
     try {
-      const response = await fetch('http://172.19.200.175:3000/Login/list_user', {
+      const response = await fetch(link_api+'Login/list_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -58,14 +61,14 @@ const LoginScreen = () => {
         const responseData = await response.json();
         const user = responseData.user;
         console.log(user);
-        navigation.navigate('home', { role: user.role })
+        navigation.navigate('home2')
 
         showMessage({
           message: 'Đăng nhập thành công',
           type: 'success',
           position: 'center'
         });
-        
+
       } else {
         showMessage({
           message: 'Tài khoản hoặc mật khẩu không chính xác',

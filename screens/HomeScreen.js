@@ -12,7 +12,7 @@ const HomeScreen = ({route}) => {
     navigation.navigate('detailService', { item });
   }
 
-  const {_id, address, email, name, numberPhone, password, role, status}= route.params.user;
+  // const {_id, address, email, name, numberPhone, password, role, status}= route.params.user;
   
   //item
   // const RenderitemService =({data,onpress})=>{
@@ -30,9 +30,12 @@ const HomeScreen = ({route}) => {
   //slide 
 
   //Data
+
+  const link_api="http://192.168.54.9:3000/";
+
   const fetchData = async () => {
     try {
-      let res = await fetch('http://172.19.200.175:3000/Service/list');
+      let res = await fetch(link_api+'Service/list');
       let Data = await res.json();
       setdata(Data);
     } catch (error) {

@@ -23,11 +23,11 @@ const AssignScreen = ({ route }) => {
   const [openDateStart, setOpenDateStart] = useState(false);
   const [openDateEnd, setOpenDateEnd] = useState(false);
 
-
+  const link_api="http://192.168.54.9:3000/";
 
   const fetchDateJob = async () => {
     try {
-      const res = await fetch('http://172.19.200.175:3000/Job/list');
+      const res = await fetch(link_api+'Job/list');
       const result = await res.json();
       setDataJob(result);
     } catch (error) {
@@ -37,7 +37,7 @@ const AssignScreen = ({ route }) => {
 
   const fetchDateAssign = async () => {
     try {
-      const res = await fetch('http://172.19.200.175:3000/Assign/list');
+      const res = await fetch(link_api+'Assign/list');
       const result = await res.json();
       setDataAssign(result);
     } catch (error) {
