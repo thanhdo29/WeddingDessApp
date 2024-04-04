@@ -8,7 +8,6 @@ import { showMessage } from 'react-native-flash-message';
 import FlashMessage from "react-native-flash-message";
 
 
-
 const LoginScreen = () => {
   const [password, setPassword] = useState("")
   const [email, setEmail] = useState("")
@@ -26,27 +25,26 @@ const LoginScreen = () => {
 
   const login = async () => {
 
-   
+    navigation.navigate('home2');
     if (email === "" || password === "") {
       showMessage({
         message: "Vui lòng nhập đủ thông tin",
         type: 'warning',
         position: 'center'
-      })
+      });
       return;
     }
     if (password.length < 6) {
       showMessage({
-        message: "Mật khẩu phải có kí tự > 6",
+        message: "Mật khẩu phải có ít nhất 6 kí tự",
         type: 'warning',
         position: 'center'
-      })
+      });
       return;
-
     }
+
     try {
-      
-      const response = await fetch('http://192.168.244.43:3000/Login/list_user', {
+      const response = await fetch('http://192.168.1.98:3000/Login/list_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,17 +55,16 @@ const LoginScreen = () => {
         })
       });
 
-      console.log("bước 1 ")
+
 
       // Nếu đăng nhập thành công, chuyển hướng đến màn hình Home
       if (response.status === 200) {
-       console.log("bước 2")
         showMessage({
           message: 'Đăng nhập thành công',
           type: 'success',
           position: 'center'
         })
-       
+
         
 
 
@@ -76,14 +73,13 @@ const LoginScreen = () => {
           message: 'Tài khoản hoặc mật khẩu không chính xác',
           type: 'danger',
           position: 'center',
-
-        })
+        });
       }
     } catch (error) {
-      console.log("Erroádsadsadsd", error)
+      console.log("Lỗi:", error);
     }
+  };
 
-  }
   const replaceSignup = () => {
     navigation.navigate('signup')
   }
@@ -96,7 +92,7 @@ const LoginScreen = () => {
         <Text style={{ fontWeight: 'bold', color: Colors.Gray, marginTop: Spacing.space_10, fontSize: Fontsizes.fs_16 }}>Đăng nhập để tiếp tục</Text>
       </View>
       {/* <CustomTextInput style={styles.input} label={'Tên đăng nhập'} props={text =>{setemail(text)}} value={email} />
-      <CustomTextInput label={'Mật khẩu'} value={passWord} props={text=>{setpassWord(text)}}/> */}
+        <CustomTextInput label={'Mật khẩu'} value={passWord} props={text=>{setpassWord(text)}}/> */}
 
 
       <CustomTextInput
@@ -115,7 +111,7 @@ const LoginScreen = () => {
         <Text>Quên mật khẩu ?</Text>
       </View>
 
-      <CustomButton label={'Đăng nhập'} onPress={()=>login()} />
+      <CustomButton label={'Đăng nhập'} onPress={login} />
 
       <View style={styles.loginOther}>
         <Text>-Hoặc-</Text>

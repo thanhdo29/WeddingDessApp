@@ -5,17 +5,31 @@ import { useNavigation } from '@react-navigation/native'
 import { Colors, Fontsizes, Spacing } from '../constants'
 import Banner from '../component/Banner'
 import Swiper from 'react-native-swiper'
-const HomeScreen = () => {
+const HomeScreen = ({route}) => {
   const navigation = useNavigation();
   const [data, setdata] = useState([])
-  const navigateToDetailService = (item) => {
-    navigation.navigate('detailService', { item });
-
+  const navigateToDetailService = (service) => {
+    navigation.navigate('detailService', { service });
   }
- 
+  //item
+  // const RenderitemService =({data,onpress})=>{
+  //   return(
+  //     <View>
+  //     <TouchableOpacity key={data._id} onPress={onpress}>
+  //       <Image source={{uri:data.img}} style={{width:100,height:100}}></Image>
+  //       <Text>{data.nameService}</Text>
+  //       <Text>{data.priceService}</Text>
+  //     </TouchableOpacity>
+  //     <Button title='Thêm vào giỏ hàng' ></Button>
+  //     </View>
+  //   )
+  // }
+  //slide 
+
+  //Data
   const fetchData = async () => {
     try {
-      let res = await fetch('http://192.168.1.98:3000/Service/list');
+      let res = await fetch('http://172.19.200.175:3000/Service/list');
       let Data = await res.json();
       setdata(Data);
     } catch (error) {
@@ -39,8 +53,10 @@ const HomeScreen = () => {
       <Swiper autoplay={true} autoplayTimeout={1}>
         {data.map((service) => (
           <View key={service._id} style={styles.productItem}>
+            <TouchableOpacity
             
-            <TouchableOpacity    onPress={()=>navigateToDetailService(service)}
+            onPress={()=>navigateToDetailService(service)}
+            
           >
             <Image source={{ uri: service.img }} style={{ width: 300, height: 300, alignItems: 'center' }}></Image>
             <Text >{service.nameService}</Text>
@@ -48,7 +64,7 @@ const HomeScreen = () => {
           </TouchableOpacity>
           </View>
         ))}
-        
+
       </Swiper>
       {/* Danh sách sản phẩm mới */}
       <View style={styles.section}>
@@ -58,7 +74,7 @@ const HomeScreen = () => {
           data={data}
           keyExtractor={item => item._id.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity style={styles.productItem} onPress={()=>{navigation.navigate('detailService',{item})}}>
+            <TouchableOpacity style={styles.productItem} onPress={() => { navigation.navigate('detailService', { item }) }}>
               <Image source={{ uri: item.img }} style={{ width: 200, height: 200, alignItems: 'center' }}></Image>
               <Text >{item.nameService}</Text>
             </TouchableOpacity>

@@ -14,6 +14,7 @@ import ListJob from './screens/ListJob';
 import DetailStaffScreen from './screens/DetailStaffScreen';
 import DetailServiceScreen from './screens/DetailServiceScreen';
 import BottomTab from './navigation/BottonTab';
+import AssignScreen from './screens/AssignScreen';
 
 
 
@@ -35,6 +36,7 @@ const App = () => {
         <Stack.Screen name='detailStaff' component={DetailStaffScreen}/>
         <Stack.Screen name='detailService' component={DetailServiceScreen}/>
         <Stack.Screen name='Customer' component={ListCustomerScreen}/>
+        <Stack.Screen name='assign' component={AssignScreen}/>
       </Stack.Navigator>
      </NavigationContainer>
   )
