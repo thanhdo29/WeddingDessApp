@@ -66,9 +66,12 @@ const SettingScreen = () => {
                     }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <Icon2 name="warning" size={Fontsizes.fs_32} color="black" style={{ padding: 10 }} />
-                            <Text style={{ fontSize: Fontsizes.fs_22, color: Colors.Black, fontWeight: '500', marginBottom: Spacing.space_10 }}>Đăng xuất</Text>
-                            <Text style={{ fontSize: Fontsizes.fs_15, color: Colors.Black, fontWeight: '400', marginBottom: Spacing.space_16 }}>Bạn có chắc chắn muốn đăng xuất không ?</Text>
+                            <View style={{ alignItems: 'center' }}>
+                                <Icon2 name="warning" size={Fontsizes.fs_32} color="black" style={{ padding: 10 }} />
+                                <Text style={{ fontSize: Fontsizes.fs_22, color: Colors.Black, fontWeight: '500', marginBottom: Spacing.space_10 }}>Đăng xuất</Text>
+                                <Text style={{ fontSize: Fontsizes.fs_15, color: Colors.Black, fontWeight: '400', marginBottom: Spacing.space_16 }}>Bạn có chắc chắn muốn đăng xuất không ?</Text>
+                            </View>
+
                             <View style={styles.viewModal}>
                                 <TouchableOpacity style={styles.btnY} onPress={() => { setModalLogout(false) }}>
                                     <Text style={styles.textbtn}>Không</Text>
@@ -89,7 +92,7 @@ const SettingScreen = () => {
                     }}>
                     <View style={styles.centeredView}>
                         <View style={styles.modalView}>
-                            <View style={{alignItems:'center'}}>
+                            <View style={{ alignItems: 'center' }}>
                                 <Text style={{ fontSize: Fontsizes.fs_24, color: Colors.Black, fontWeight: '600' }}>Đổi mật khẩu</Text>
                             </View>
                             <CustomTextInput
@@ -99,6 +102,10 @@ const SettingScreen = () => {
                             />
                             <CustomTextInput label={'Mật khẩu mới'} props={{ secureTextEntry: true }} />
                             <CustomTextInput label={'Nhập lại mật khẩu'} props={{ secureTextEntry: true }} />
+
+                            <View style={{paddingHorizontal:Spacing.space_20}}>
+                                <CustomButton label={'Đổi'} />
+                            </View>
                         </View>
                     </View>
                 </Modal>

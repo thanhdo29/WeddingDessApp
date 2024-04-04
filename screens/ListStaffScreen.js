@@ -15,7 +15,7 @@ const ListStaffScreen = () => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://192.168.53.9:3000/User/list');
+      let res = await fetch('http://172.19.200.175:3000/User/list');
       let result = await res.json();
       setData(result);
     } catch (error) {
@@ -42,8 +42,8 @@ const ListStaffScreen = () => {
             <Text style={styles.textPriceService}>Quê quán: {item.address}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.xemthem}>
-          <Icon2 name="phone" color={Colors.Black} size={Fontsizes.fs_32} />
+        <TouchableOpacity style={styles.xemthem} onPress={()=>{navigation.navigate('assign', {item})}}>
+          <Text>Giao việc</Text>
         </TouchableOpacity>
       </TouchableOpacity>
     )

@@ -1,4 +1,4 @@
-import { ActivityIndicator, Alert, FlatList, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
+import { ActivityIndicator, Alert, Button, FlatList, Modal, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import CusomTextInputSearch from '../component/CusomTextInputSearch';
 import { Colors, Fontsizes, Radius, Spacing } from '../constants';
@@ -7,30 +7,26 @@ import CustomButton from '../component/CustomButton';
 import CustomTextInput from '../component/CustomTextInput';
 import DatePicker from 'react-native-date-picker'
 import Icon1 from 'react-native-vector-icons/AntDesign';
+import { useNavigation } from '@react-navigation/native';
+
 
 
 
 const ListJob = () => {
+  const navigation = useNavigation();
+
   const [data, setData] = useState([]);
   const [modalAdd, setModalAdd] = useState(false);
-  const [dataStaff, setDataStaff] = useState([]);
   const [selectedItem, setSelectedItem] = useState('');
-  const [loading, setLoading] = useState(false);
   const [showStaffList, setShowStaffList] = useState(false);
 
 
-
   const [nameJob, setNameJob] = useState('');
-  const [startDate, setStartDate] = useState(new Date());
-  const [endDate, setEndDate] = useState(new Date());
-  const [statusJob, setStatusJob] = useState(false);
   const [desJob, setDesJob] = useState('');
-  const [openDateStart, setOpenDateStart] = useState(false);
-  const [openDateEnd, setOpenDateEnd] = useState(false);
 
   const fetchData = async () => {
     try {
-      const res = await fetch('http://192.168.53.9:3000/Job/list');
+      const res = await fetch('http://172.19.200.175:3000/Job/list');
       const result = await res.json();
       setData(result);
     } catch (error) {
@@ -39,21 +35,7 @@ const ListJob = () => {
   }
 
 
-
-  const fetchDataStaff = async () => {
-    try {
-      let res = await fetch('http://192.168.53.9:3000/User/list');
-      let result = await res.json();
-      setDataStaff(result);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-
   useEffect(() => {
-    fetchDataStaff();
     fetchData();
     console.log(data);
   }, []);
@@ -71,17 +53,19 @@ const ListJob = () => {
   const renderItem = ({ item }) => {
     return (
       <View style={styles.item1}>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.nameStaff}>Tên nhân viên: {item.name}</Text>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={styles.textItem}>Tên công việc: </Text>
+          <Text style={styles.textItem}>{item.nameJob}</Text>
+        </View>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           <Text style={styles.textItem}>Mô tả công việc: </Text>
           <Text style={styles.textItem}>{item.descriptionJob}</Text>
         </View>
-        <View style={{ flex: 1 }}>
-          <Text style={styles.nameStaff}>{item.nameJob}</Text>
-          <Text style={styles.textItem}>Trạng thái: Đang làm</Text>
-          <Text style={styles.textItem}>Ngày bắt đầu: {item.dateStart}</Text>
-          <Text style={styles.textItem}>Ngày kết thúc: {item.endEnd}</Text>
-        </View>
+
+        {/* <Text style={styles.textItem}>Trạng thái: {item.statusJob ? 'Hoàn thành' : 'Đang làm'}</Text> */}
+        {/* <Text style={styles.textItem}>Ngày bắt đầu: {`${(new Date(item.dateStart)).getDate()}-${(new Date(item.dateStart)).getMonth() + 1}-${(new Date(item.dateStart)).getFullYear()}`}</Text>
+          <Text style={styles.textItem}>Ngày kết thúc: {`${(new Date(item.endEnd)).getDate()}-${(new Date(item.endEnd)).getMonth() + 1}-${(new Date(item.endEnd)).getFullYear()}`}</Text> */}
+
       </View>
     )
   }
@@ -94,41 +78,6 @@ const ListJob = () => {
     }
   }
 
-
-  const handleConfirmDate = (newDate, field) => {
-
-    if (field === "start") {
-      setStartDate(newDate)
-      console.log(newDate);
-      setOpenDateStart(false)
-    } else if (field === "end") {
-      setEndDate(newDate)
-      console.log(newDate);
-      setOpenDateEnd(false)
-    }
-  };
-  const renderDateStart = () => {
-    return (
-      <View style={styles.containerDate}>
-        <Text style={styles.textDate}>Ngày bắt đầu: </Text>
-        <TouchableOpacity onPress={() => setOpenDateStart(true)}>
-          <Text style={styles.textDate}>{`${startDate.getDate()}- ${startDate.getMonth() + 1}- ${startDate.getFullYear()}`}</Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-
-  const renderDateEnd = () => {
-    return (
-      <View style={styles.containerDate}>
-        <Text style={styles.textDate}>Ngày kết thúc: </Text>
-        <TouchableOpacity onPress={() => setOpenDateEnd(true)}>
-          <Text style={styles.textDate}>{`${endDate.getDate()}- ${endDate.getMonth() + 1}- ${endDate.getFullYear()}`}</Text>
-        </TouchableOpacity>
-      </View>
-    )
-  }
-
   const handleAddJob = async () => {
     if (nameJob === "" || desJob === "") {
       Alert.alert("Thông báo", "Vui lòng nhập đủ thông tin");
@@ -136,7 +85,7 @@ const ListJob = () => {
     }
 
     try {
-      const res = await fetch('http://192.168.53.9:3000/Job/add', {
+      const res = await fetch('http://172.19.200.175:3000/Job/add', {
         method: "POST",
         headers: {
           Accept: 'application/json',
@@ -144,10 +93,7 @@ const ListJob = () => {
         },
         body: JSON.stringify({
           nameJob: nameJob,
-          dateStart: startDate,
-          endEnd: endDate,
           descriptionJob: desJob,
-          name: selectedItem.name
         })
       });
 
@@ -162,11 +108,20 @@ const ListJob = () => {
     } catch (error) {
       console.log(error);
     }
+
+  }
+
+  const back = () => {
+    navigation.goBack()
   }
 
 
   return (
     <View style={styles.container}>
+
+      <TouchableOpacity style={styles.back} onPress={() => back()}>
+        <Icon1 name="arrowleft" color={Colors.Black} size={Fontsizes.fs_22} />
+      </TouchableOpacity>
       <CusomTextInputSearch />
 
       <FlatList
@@ -191,28 +146,7 @@ const ListJob = () => {
               <Text style={{ color: Colors.Black, fontWeight: '600', fontSize: Fontsizes.fs_28 }}>Tạo công việc</Text>
             </View>
             <CustomTextInput label={'Tên công việc'} onChangeText={(txt) => handleTextInputChange(txt, "name")} props={styles.inputc} />
-            <View>{renderDateStart()}</View>
 
-            <DatePicker
-              title={'Ngày bắt đầu'}
-              open={openDateStart}
-              modal
-              mode='date'
-              date={startDate}
-              onCancel={() => setOpenDateStart(false)}
-              onConfirm={(newDate) => handleConfirmDate(newDate, "start")}
-
-            />
-            <View>{renderDateEnd()}</View>
-            <DatePicker
-              title={'Ngày kết thúc'}
-              open={openDateEnd}
-              modal
-              mode='date'
-              date={endDate}
-              onCancel={() => setOpenDateEnd(false)}
-              onConfirm={(newDate) => handleConfirmDate(newDate, "end")}
-            />
             <View style={styles.descriptionContainer}>
               <Text style={styles.descriptionLabel}>Mô tả công việc</Text>
               <TextInput
@@ -220,11 +154,10 @@ const ListJob = () => {
                 style={styles.descriptionInput}
                 multiline={true}
                 numberOfLines={4}
-
               />
             </View>
 
-            <View>
+            {/* <View>
               <TouchableOpacity onPress={toggleStaffList}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: Spacing.space_18 }}>
                   <Text style={{ marginRight: 10, fontSize: Fontsizes.fs_18, color: Colors.Black }}>Nhân viên</Text>
@@ -243,7 +176,7 @@ const ListJob = () => {
               {selectedItem !== '' && (
                 <Text style={{ marginTop: 20, color: Colors.Black, fontSize: Fontsizes.fs_15 }}>Đã chọn: {selectedItem.name}</Text>
               )}
-            </View>
+            </View> */}
 
             <CustomButton label={'Xác nhận'} onPress={() => handleAddJob()} />
 
@@ -324,7 +257,6 @@ const styles = StyleSheet.create({
     fontSize: Fontsizes.fs_16
   },
   item1: {
-    flexDirection: 'row',
     borderRadius: Radius.rd_10,
     borderWidth: 1,
     borderColor: Colors.Black,
@@ -340,7 +272,9 @@ const styles = StyleSheet.create({
   textItem: {
     color: Colors.Black,
     fontSize: Fontsizes.fs_15,
-    margin: Spacing.space_4
-
-  }
+    margin: Spacing.space_3
+  },
+  back: {
+    marginTop: Spacing.space_16
+  },
 })
