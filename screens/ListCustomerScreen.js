@@ -34,9 +34,11 @@ const ListCustomerScreen = () => {
     }
   }
 
+  const link_api="http://172.19.200.113:3000/";
+
   const fetchData = async () => {
     try {
-      let res = await fetch('http://172.19.200.175:3000/Customer/list');
+      let res = await fetch(link_api+'Customer/list');
       let result = await res.json();
       setData(result);
     } catch (error) {
@@ -51,7 +53,7 @@ const ListCustomerScreen = () => {
       return;
     }
     try {
-      let res = await fetch('http://172.19.200.175:3000/Customer/add', {
+      let res = await fetch(link_api+'Customer/add', {
         method: "POST",
         headers: {
           Accept: 'application/json',
@@ -84,7 +86,7 @@ const ListCustomerScreen = () => {
     }
 
     try {
-      let res = await fetch('http://172.19.200.175:3000/Customer/put/' + item._id, {
+      let res = await fetch(link_api+'Customer/put/' + item._id, {
         method: "PUT",
         headers: {
           Accept: 'application/json',

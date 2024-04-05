@@ -12,10 +12,12 @@ const ListStaffScreen = () => {
   const [data, setData] = useState([]);
 
   const [searchKeyword, setSearchKeyword] = useState('');
+  const link_api="http://172.19.200.113:3000/";
+
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://172.19.200.175:3000/User/list');
+      let res = await fetch(link_api+'User/list');
       let result = await res.json();
       setData(result);
     } catch (error) {

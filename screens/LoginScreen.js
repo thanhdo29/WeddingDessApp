@@ -6,6 +6,7 @@ import CustomButton from '../component/CustomButton'
 import { useNavigation } from '@react-navigation/native';
 import { showMessage } from 'react-native-flash-message';
 import FlashMessage from "react-native-flash-message";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 
 const LoginScreen = () => {
@@ -14,7 +15,7 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const link_api="http://192.168.54.9:3000/";
+  const link_api="http://172.19.200.113:3000/";
 
 
   const handleInputChange = (text, field) => {
@@ -61,8 +62,9 @@ const LoginScreen = () => {
         const responseData = await response.json();
         const user = responseData.user;
         console.log(user);
-        navigation.navigate('home2')
+        navigation.navigate('home2');
 
+        await AsyncStorage.setItem('data', JSON.stringify(user));
         showMessage({
           message: 'Đăng nhập thành công',
           type: 'success',

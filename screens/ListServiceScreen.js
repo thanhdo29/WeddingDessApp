@@ -42,13 +42,16 @@ const ListServiceScreen = () => {
   //   return item.toLowerCase().includes(searchKeyword.toLowerCase());
   // })
 
+  const link_api="http://172.19.200.113:3000/";
+
+
   const handleAddService = async () => {
     if (serviceName === "" || servicePrice === "" || serviceDes === "") {
       Alert.alert("Thông báo", 'Vui lòng nhập đủ thông tin')
       return;
     }
 
-    let res = await fetch('http://172.19.200.175:3000/Service/add', {
+    let res = await fetch(link_api+'Service/add', {
 
       method: "POST",
       headers: {
@@ -85,7 +88,7 @@ const ListServiceScreen = () => {
       }
 
 
-      const res = await fetch('http://172.19.200.175:3000/Service/put/' + item._id, {
+      const res = await fetch(link_api+'Service/put/' + item._id, {
 
         method: "PUT",
         headers: {
@@ -115,7 +118,7 @@ const ListServiceScreen = () => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://172.19.200.175:3000/Service/list');
+      let res = await fetch(link_api+'Service/list');
       let result = await res.json();
       setData(result);
     } catch (error) {
