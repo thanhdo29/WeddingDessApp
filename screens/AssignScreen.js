@@ -23,7 +23,7 @@ const AssignScreen = ({ route }) => {
   const [openDateStart, setOpenDateStart] = useState(false);
   const [openDateEnd, setOpenDateEnd] = useState(false);
 
-  const link_api="http://172.19.200.113:3000/";
+  const link_api="http://192.168.54.3:3000/";
 
   const fetchDateJob = async () => {
     try {

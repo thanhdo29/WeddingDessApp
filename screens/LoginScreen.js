@@ -15,7 +15,7 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
-  const link_api="http://172.19.200.113:3000/";
+  const link_api="http://192.168.54.3:3000/";
 
 
   const handleInputChange = (text, field) => {
@@ -29,7 +29,6 @@ const LoginScreen = () => {
 
   const login = async () => {
 
-    navigation.navigate('home2');
     if (email === "" || password === "") {
       showMessage({
         message: "Vui lòng nhập đủ thông tin",
@@ -48,7 +47,7 @@ const LoginScreen = () => {
     }
 
     try {
-      const response = await fetch('http://172.19.200.175:3000/Login/list_user', {
+      const response = await fetch('http://192.168.54.3:3000/Login/list_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -66,13 +65,16 @@ const LoginScreen = () => {
         const responseData = await response.json();
         const user = responseData.user;
         console.log(user);
-        navigation.navigate('home', { role: user.role })
 
         showMessage({
           message: 'Đăng nhập thành công',
           type: 'success',
           position: 'center'
         });
+        navigation.navigate('home2');
+
+        await AsyncStorage.setItem('data', JSON.stringify(user));
+
         
       } else {
         showMessage({
