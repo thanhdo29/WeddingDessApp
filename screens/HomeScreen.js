@@ -83,22 +83,8 @@ const HomeScreen = () => {
     console.log(dataAssign);
   }, [dataAssign]);
 
-      </View>
-      < Text style={styles.sectionTitle}>Hot Products</Text>
-      <Swiper autoplay={true} autoplayTimeout={1}>
-        {data.map((service) => (
-          <View key={service._id} style={styles.productItem}>
-            <TouchableOpacity
-            
-            onPress={()=>navigateToDetailService(service)}
-            
-          >
-            <Image source={{ uri: service.img }} style={{ width: 300, height: 300, alignItems: 'center' }}></Image>
-            <Text >{service.nameService}</Text>
-            <Text >{service.priceService}</Text>
-          </TouchableOpacity>
-          </View>
-        ))}
+      
+  
 
   const getJobDesById = (jobId) => {
     const foundJob = job.find(item => item._id === jobId);
