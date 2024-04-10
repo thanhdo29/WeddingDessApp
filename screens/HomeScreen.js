@@ -61,7 +61,7 @@ const HomeScreen = () => {
 
   const getJobDesById = (jobId) => {
     const foundJob = job.find(item => item._id === jobId);
-    return foundJob ? foundJob.descriptionJob : '';
+    return foundJob ? foundJob.nameJob : '';
   };
 
   const complete = async (id) => {
@@ -143,7 +143,7 @@ const HomeScreen = () => {
           <ActivityIndicator size={'large'} />
         ) : (
           assign.map(ass => {
-            
+           
             return (
               <View key={ass._id} style={styles.jobContainer}>
                 <Text>Công việc: {getJobDesById(ass.idJob)}</Text>
