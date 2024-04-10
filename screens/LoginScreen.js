@@ -16,10 +16,14 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
 <<<<<<< HEAD
+<<<<<<< HEAD
   const link_api="http://192.168.1.98:3000/";
 =======
   const link_api="http://172.19.200.113:3000/";
 >>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
+=======
+  const link_api="http://192.168.54.3:3000/";
+>>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
 
 
   const handleInputChange = (text, field) => {
@@ -32,7 +36,11 @@ const LoginScreen = () => {
 
 
   const login = async () => {
+<<<<<<< HEAD
     navigation.navigate('home2')
+=======
+
+>>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
     if (email === "" || password === "") {
       showMessage({
         message: "Vui lòng nhập đủ thông tin",
@@ -52,10 +60,14 @@ const LoginScreen = () => {
 
     try {
 <<<<<<< HEAD
+<<<<<<< HEAD
       const response = await fetch(link_api+'Login/login', {
 =======
       const response = await fetch('http://172.19.200.175:3000/Login/list_user', {
 >>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
+=======
+      const response = await fetch('http://192.168.54.3:3000/Login/list_user', {
+>>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -72,10 +84,13 @@ const LoginScreen = () => {
         const user = responseData.user;
         console.log(user);
 <<<<<<< HEAD
+<<<<<<< HEAD
        
 =======
         navigation.navigate('home', { role: user.role })
 >>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
+=======
+>>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
 
         showMessage({
           message: 'Đăng nhập thành công',
@@ -83,8 +98,15 @@ const LoginScreen = () => {
           position: 'center'
         });
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
+=======
+        navigation.navigate('home2');
+
+        await AsyncStorage.setItem('data', JSON.stringify(user));
+
+>>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
         
 >>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
       } else {

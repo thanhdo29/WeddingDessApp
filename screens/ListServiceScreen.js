@@ -42,6 +42,12 @@ const ListServiceScreen = () => {
   //   return item.toLowerCase().includes(searchKeyword.toLowerCase());
   // })
 
+<<<<<<< HEAD
+=======
+  const link_api="http://192.168.54.3:3000/";
+
+
+>>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
   const handleAddService = async () => {
     if (serviceName === "" || servicePrice === "" || serviceDes === "") {
       Alert.alert("Thông báo", 'Vui lòng nhập đủ thông tin')
