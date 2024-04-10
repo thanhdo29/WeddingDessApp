@@ -6,6 +6,7 @@ import CustomButton from '../component/CustomButton'
 import { useNavigation } from '@react-navigation/native';
 import { showMessage } from 'react-native-flash-message';
 import FlashMessage from "react-native-flash-message";
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 
 const LoginScreen = () => {
@@ -14,7 +15,11 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
+<<<<<<< HEAD
   const link_api="http://192.168.1.98:3000/";
+=======
+  const link_api="http://172.19.200.113:3000/";
+>>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
 
 
   const handleInputChange = (text, field) => {
@@ -46,7 +51,11 @@ const LoginScreen = () => {
     }
 
     try {
+<<<<<<< HEAD
       const response = await fetch(link_api+'Login/login', {
+=======
+      const response = await fetch('http://172.19.200.175:3000/Login/list_user', {
+>>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,14 +71,22 @@ const LoginScreen = () => {
         const responseData = await response.json();
         const user = responseData.user;
         console.log(user);
+<<<<<<< HEAD
        
+=======
+        navigation.navigate('home', { role: user.role })
+>>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
 
         showMessage({
           message: 'Đăng nhập thành công',
           type: 'success',
           position: 'center'
         });
+<<<<<<< HEAD
 
+=======
+        
+>>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
       } else {
         showMessage({
           message: 'Tài khoản hoặc mật khẩu không chính xác  1',

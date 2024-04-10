@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const ListJob = () => {
+  
   const navigation = useNavigation();
 
   const [data, setData] = useState([]);
@@ -24,9 +25,12 @@ const ListJob = () => {
   const [nameJob, setNameJob] = useState('');
   const [desJob, setDesJob] = useState('');
 
+  const link_api="http://172.19.200.113:3000/";
+
+
   const fetchData = async () => {
     try {
-      const res = await fetch('http://172.19.200.175:3000/Job/list');
+      const res = await fetch(link_api+'Job/list');
       const result = await res.json();
       setData(result);
     } catch (error) {

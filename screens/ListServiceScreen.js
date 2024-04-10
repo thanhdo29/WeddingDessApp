@@ -115,7 +115,7 @@ const ListServiceScreen = () => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://192.168.1.98:3000/Service/list');
+      let res = await fetch('http://172.19.201.46:3000/Service/list');
       let result = await res.json();
       setData(result);
     } catch (error) {
