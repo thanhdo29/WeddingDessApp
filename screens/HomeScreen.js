@@ -19,6 +19,24 @@ const HomeScreen = () => {
   const [role, setRole] = useState('');
   const [isLoadingStaff, setIsLoadingStaff] = useState(true);
 
+  const [data, setdata] = useState([])
+  const navigateToDetailService = (service) => {
+    navigation.navigate('detailService', { service });
+  }
+  //item
+  // const RenderitemService =({data,onpress})=>{
+  //   return(
+  //     <View>
+  //     <TouchableOpacity key={data._id} onPress={onpress}>
+  //       <Image source={{uri:data.img}} style={{width:100,height:100}}></Image>
+  //       <Text>{data.nameService}</Text>
+  //       <Text>{data.priceService}</Text>
+  //     </TouchableOpacity>
+  //     <Button title='Thêm vào giỏ hàng' ></Button>
+  //     </View>
+  //   )
+  // }
+  //slide 
 
   const getData = async () => {
     try {
@@ -65,22 +83,22 @@ const HomeScreen = () => {
     console.log(dataAssign);
   }, [dataAssign]);
 
-
-  //lấy danh sách công việc
-  const fetchlistJob = async () => {
-    try {
-      let res = await fetch(link_api + 'Job/list');
-      let result = await res.json();
-      setJob(result);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  const getJobNameById = (jobId) => {
-    const foundJob = job.find(item => item._id === jobId);
-    return foundJob ? foundJob.nameJob : '';
-  }
+      </View>
+      < Text style={styles.sectionTitle}>Hot Products</Text>
+      <Swiper autoplay={true} autoplayTimeout={1}>
+        {data.map((service) => (
+          <View key={service._id} style={styles.productItem}>
+            <TouchableOpacity
+            
+            onPress={()=>navigateToDetailService(service)}
+            
+          >
+            <Image source={{ uri: service.img }} style={{ width: 300, height: 300, alignItems: 'center' }}></Image>
+            <Text >{service.nameService}</Text>
+            <Text >{service.priceService}</Text>
+          </TouchableOpacity>
+          </View>
+        ))}
 
   const getJobDesById = (jobId) => {
     const foundJob = job.find(item => item._id === jobId);

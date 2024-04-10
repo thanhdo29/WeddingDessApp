@@ -54,6 +54,7 @@ const ListCustomerScreen = () => {
     }
     try {
       let res = await fetch(link_api+'Customer/add', {
+
         method: "POST",
         headers: {
           Accept: 'application/json',

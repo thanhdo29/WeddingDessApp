@@ -28,6 +28,8 @@ const LoginScreen = () => {
 
 
   const login = async () => {
+
+    navigation.navigate('home2');
     if (email === "" || password === "") {
       showMessage({
         message: "Vui lòng nhập đủ thông tin",
@@ -46,7 +48,7 @@ const LoginScreen = () => {
     }
 
     try {
-      const response = await fetch(link_api+'Login/list_user', {
+      const response = await fetch('http://172.19.200.175:3000/Login/list_user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -57,20 +59,21 @@ const LoginScreen = () => {
         })
       });
 
-      // Kiểm tra mã trạng thái của phản hồi
+
+
+      // Nếu đăng nhập thành công, chuyển hướng đến màn hình Home
       if (response.status === 200) {
         const responseData = await response.json();
         const user = responseData.user;
         console.log(user);
-        navigation.navigate('home2');
+        navigation.navigate('home', { role: user.role })
 
-        await AsyncStorage.setItem('data', JSON.stringify(user));
         showMessage({
           message: 'Đăng nhập thành công',
           type: 'success',
           position: 'center'
         });
-
+        
       } else {
         showMessage({
           message: 'Tài khoản hoặc mật khẩu không chính xác',
@@ -114,7 +117,7 @@ const LoginScreen = () => {
         <Text>Quên mật khẩu ?</Text>
       </View>
 
-      <CustomButton label={'Đăng nhập'} onPress={() => login()} />
+      <CustomButton label={'Đăng nhập'} onPress={login} />
 
       <View style={styles.loginOther}>
         <Text>-Hoặc-</Text>
