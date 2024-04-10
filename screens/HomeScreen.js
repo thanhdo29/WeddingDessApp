@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { Colors, Fontsizes, Radius, Spacing } from '../constants';
 import CustomButton from '../component/CustomButton';
-
+import Icon1 from 'react-native-vector-icons/AntDesign'
 const HomeScreen = () => {
   const navigation = useNavigation();
   const [dataAssign, setDataAssign] = useState([]);
@@ -15,7 +15,9 @@ const HomeScreen = () => {
   const [staff, setStaff] = useState([]);
   const [role, setRole] = useState('');
   const [isLoadingStaff, setIsLoadingStaff] = useState(true);
-
+  const cart=()=>{
+    navigation.navigate('cart')
+  }
   const getData = async () => {
     try {
       const user = await AsyncStorage.getItem('data');
@@ -165,6 +167,9 @@ const HomeScreen = () => {
 
   return (
     <ScrollView>
+      <TouchableOpacity onPress={cart} >
+            <Icon1 name='shoppingcart' size={30}></Icon1>
+          </TouchableOpacity>
       {role === 'manager' ? renderManagerScreen() : renderStaffScreen()}
     </ScrollView>
   );

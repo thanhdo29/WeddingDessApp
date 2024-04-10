@@ -16,7 +16,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
 
-  const link_api="http://192.168.54.3:3000/";
+  const link_api="http://192.168.1.98:3000/";
 
 
   const handleInputChange = (text, field) => {

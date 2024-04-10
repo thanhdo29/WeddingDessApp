@@ -25,7 +25,7 @@ const ListJob = () => {
   const [nameJob, setNameJob] = useState('');
   const [desJob, setDesJob] = useState('');
 
-  const link_api="http://192.168.54.3:3000/";
+  const link_api="http://192.168.1.98:3000/";
 
 
   const fetchData = async () => {

@@ -20,22 +20,29 @@ const DetailServiceScreen = ({ route }) => {
  const [nameStaff,setnameStaff]=useState('')
 
  const {_id, nameService, statusService, descriptionService, priceService, img } = route.params.item
- //tìm phone
- const findphone=async()=>{
-  let phone = await dataCustomer.find(Customer=>Customer._id===selected1)
-  return setphoneCustomer(phone.numberphone);
+
+ 
+  //tìm phone
+  console.log(selected1)
+ const findphone=async(khachhang)=>{
+  const phone = await dataCustomer.find(Customer=>Customer._id===khachhang)
+  setphoneCustomer(phone.numberphone)
+  return phoneCustomer
 }
+  
   //tìm name khách hàng
-  const findnameCustomer=async()=>{
-    let name = await dataCustomer.find(Customer=>Customer._id===selected1)
-    return setnameCustomer(name.nameCustomer);
+  const findnameCustomer=async(khachhang)=>{
+    let name = await dataCustomer.find(Customer=>Customer._id===khachhang)
+     setnameCustomer(name.nameCustomer);
+     return nameCustomer
   }
   //tìm name nhân viên
-  const findnameStaff=async()=>{
-    let name =await dataStaff.find(Staff=>Staff._id===selected)
-    return setnameStaff(name.name);
+  const findnameStaff=async(nhanvien)=>{
+    let name =await dataStaff.find(Staff=>Staff._id===nhanvien)
+     setnameStaff(name.name);
+     return nameStaff
   }
-  
+ 
   //render date
   const renderDate =()=>{
     return(
@@ -51,16 +58,30 @@ const DetailServiceScreen = ({ route }) => {
   //hàm khi ấn nút sẽ hiển thị dialog
   const ondialog=()=>{
     setvisible(!visible);
-   
+    
    }
-   //hàm khi ấn nút sẽ hiển thị dialog
+   
   
+   
+    
+   
   //Xác nhận
- const xacNhan=async()=>{
-  await findphone();
-  await findnameCustomer();
-  await findnameStaff();
-  let res = await fetch('http://192.168.54.3:3000/Bill/add', {
+ const xacNhan=async(nhanvien,khachhang)=>{
+ 
+
+ 
+  
+  findnameCustomer(khachhang)
+findnameStaff(nhanvien)
+findphone(khachhang)
+  
+    console.log(phoneCustomer)
+    console.log(nameCustomer)
+    console.log(nameStaff)
+console.log(selected)
+console.log(selected1)
+ 
+  let res = await fetch('http://192.168.1.98:3000/Bill/add', {
 
       method: "POST",
       headers: {
@@ -83,7 +104,7 @@ const DetailServiceScreen = ({ route }) => {
     });
     if(res.status===200){
       Alert.alert("thêm thành công")
-      navigation.navigate('cart')
+    
     } else{
       Alert.alert("thêm thất bại")
     }
@@ -92,7 +113,7 @@ const DetailServiceScreen = ({ route }) => {
   // lấy danh sách nhân viên
   const fetchData = async () => {
     try {
-      let res = await fetch('http://192.168.54.3:3000/User/list');
+      let res = await fetch('http://192.168.1.98:3000/User/list');
       let result = await res.json();
       setdataStaff(result);
     } catch (error) {
@@ -103,7 +124,7 @@ const DetailServiceScreen = ({ route }) => {
 
   useEffect(() => {
     fetchData();
-    console.log(dataStaff);
+   
     
   }, [])
 
@@ -111,10 +132,10 @@ const DetailServiceScreen = ({ route }) => {
 
   const fetCustomer=async()=>{
     try {
-      let res =await fetch('http://192.168.54.3:3000/Customer/list');
+      let res =await fetch('http://192.168.1.98:3000/Customer/list');
       let result = await res.json();
       setdataCustomer(result);
-      console.log("thành coong2")
+     
   
     } catch (error) {
       console.log("lấy không thành công")
@@ -123,9 +144,9 @@ const DetailServiceScreen = ({ route }) => {
 
   useEffect(()=>{
     fetCustomer();
-    console.log(dataCustomer);
+    
   },[])
-  console.log(selected)
+ 
   // dialog
   
   //tìm phone
@@ -228,7 +249,7 @@ const DetailServiceScreen = ({ route }) => {
              </DatePicker>
               <Button
               title='Xác nhận' 
-              onPress={xacNhan}
+              onPress={()=>xacNhan(selected,selected1)}
               ></Button>
               <Button
               title='Hủy' 

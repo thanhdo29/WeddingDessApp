@@ -8,6 +8,9 @@ import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon2 from 'react-native-vector-icons/Ionicons';
 import { View, StyleSheet } from 'react-native';
 import { Colors, Fontsizes } from '../constants';
+import BillScreen from '../screens/BillScreen';
+import Icon3 from 'react-native-vector-icons/AntDesign'
+import CartScreen from '../screens/CartScreen';
 
 const BottomTab = () => {
     const Tab = createBottomTabNavigator();
@@ -45,6 +48,8 @@ const BottomTab = () => {
             <Tab.Screen name='list' component={ListScreen} />
             <Tab.Screen name='statistical' component={StatisticalScreen} />
             <Tab.Screen name='setting' component={SettingScreen} />
+            <Tab.Screen name='bill' component={BillScreen} />
+            <Tab.Screen name='cart' component={CartScreen} />
         </Tab.Navigator>
     );
 }

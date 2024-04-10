@@ -56,7 +56,7 @@ const SignupScreen = () => {
     }
 
     try {
-      const res = await fetch('http://172.19.200.175:3000/User/add', {
+      const res = await fetch('http://192.168.1.98:3000/User/add', {
         method: "POST",
         headers: {
           Accept: 'application/json',
