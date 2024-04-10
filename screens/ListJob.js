@@ -85,7 +85,7 @@ const ListJob = () => {
     }
 
     try {
-      const res = await fetch('http://172.19.200.175:3000/Job/add', {
+      const res = await fetch('http://192.168.1.98:3000/Job/add', {
         method: "POST",
         headers: {
           Accept: 'application/json',

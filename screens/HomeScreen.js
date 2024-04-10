@@ -29,22 +29,26 @@ const HomeScreen = ({route}) => {
   //Data
   const fetchData = async () => {
     try {
-      let res = await fetch('http://172.19.200.175:3000/Service/list');
+      let res = await fetch('http://192.168.1.98:3000/Service/list');
       let Data = await res.json();
       setdata(Data);
     } catch (error) {
       console.log("erro", error)
     }
   }
-
+  ///
   useEffect(() => {
     fetchData();
   }, [])
+  //cart
+  const cartscreen =()=>{
+    navigation.navigate('cart')
+  }
   return (
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Trang chủ</Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={()=>cartscreen()}>
           <Icon1 name="cart" size={30} color="black" style={{ padding: 10 }} />
         </TouchableOpacity>
 
@@ -55,7 +59,7 @@ const HomeScreen = ({route}) => {
           <View key={service._id} style={styles.productItem}>
             <TouchableOpacity
             
-            onPress={()=>navigateToDetailService(service)}
+          onPress={()=>navigateToDetailService(service)}
             
           >
             <Image source={{ uri: service.img }} style={{ width: 300, height: 300, alignItems: 'center' }}></Image>
@@ -72,7 +76,7 @@ const HomeScreen = ({route}) => {
         <FlatList
           horizontal
           data={data}
-          keyExtractor={item => item._id.toString()}
+          keyExtractor={item => item._id}
           renderItem={({ item }) => (
             <TouchableOpacity style={styles.productItem} onPress={() => { navigation.navigate('detailService', { item }) }}>
               <Image source={{ uri: item.img }} style={{ width: 200, height: 200, alignItems: 'center' }}></Image>

@@ -14,6 +14,9 @@ const LoginScreen = () => {
 
   const navigation = useNavigation();
 
+  const link_api="http://192.168.1.98:3000/";
+
+
   const handleInputChange = (text, field) => {
     if (field === 'email') {
       setEmail(text);
@@ -24,8 +27,7 @@ const LoginScreen = () => {
 
 
   const login = async () => {
-
-    navigation.navigate('home2');
+    navigation.navigate('home2')
     if (email === "" || password === "") {
       showMessage({
         message: "Vui lòng nhập đủ thông tin",
@@ -44,7 +46,7 @@ const LoginScreen = () => {
     }
 
     try {
-      const response = await fetch('http://192.168.1.98:3000/Login/list_user', {
+      const response = await fetch(link_api+'Login/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -55,22 +57,22 @@ const LoginScreen = () => {
         })
       });
 
-
-
-      // Nếu đăng nhập thành công, chuyển hướng đến màn hình Home
+      // Kiểm tra mã trạng thái của phản hồi
       if (response.status === 200) {
+        const responseData = await response.json();
+        const user = responseData.user;
+        console.log(user);
+       
+
         showMessage({
           message: 'Đăng nhập thành công',
           type: 'success',
           position: 'center'
-        })
-
-        
-
+        });
 
       } else {
         showMessage({
-          message: 'Tài khoản hoặc mật khẩu không chính xác',
+          message: 'Tài khoản hoặc mật khẩu không chính xác  1',
           type: 'danger',
           position: 'center',
         });
@@ -98,7 +100,7 @@ const LoginScreen = () => {
       <CustomTextInput
         label={'Tên đăng nhập'}
         props={{ secureTextEntry: false }}
-        onChangeText={(txt) => handleInputChange(txt, 'email')}
+onChangeText={(txt) => handleInputChange(txt, 'email')}
       />
 
       <CustomTextInput
@@ -111,7 +113,7 @@ const LoginScreen = () => {
         <Text>Quên mật khẩu ?</Text>
       </View>
 
-      <CustomButton label={'Đăng nhập'} onPress={login} />
+      <CustomButton label={'Đăng nhập'} onPress={() => login()} />
 
       <View style={styles.loginOther}>
         <Text>-Hoặc-</Text>

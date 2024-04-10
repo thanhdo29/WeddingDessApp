@@ -48,7 +48,7 @@ const ListServiceScreen = () => {
       return;
     }
 
-    let res = await fetch('http://172.19.200.175:3000/Service/add', {
+    let res = await fetch('http://192.168.1.98:3000/Service/add', {
 
       method: "POST",
       headers: {
@@ -85,7 +85,7 @@ const ListServiceScreen = () => {
       }
 
 
-      const res = await fetch('http://172.19.200.175:3000/Service/put/' + item._id, {
+      const res = await fetch('http://192.168.1.98:3000/Service/put/' + item._id, {
 
         method: "PUT",
         headers: {
@@ -115,7 +115,7 @@ const ListServiceScreen = () => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://172.19.200.175:3000/Service/list');
+      let res = await fetch('http://192.168.1.98:3000/Service/list');
       let result = await res.json();
       setData(result);
     } catch (error) {
