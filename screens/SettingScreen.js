@@ -1,5 +1,5 @@
 import { Modal, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Colors, Fontsizes, Radius, Spacing } from '../constants'
 import Icon from 'react-native-vector-icons/Ionicons'
 import Icon1 from 'react-native-vector-icons/MaterialIcons'
@@ -7,6 +7,7 @@ import Icon2 from 'react-native-vector-icons/AntDesign'
 import { useNavigation } from '@react-navigation/native';
 import CustomButton from '../component/CustomButton'
 import CustomTextInput from '../component/CustomTextInput'
+import AsyncStorage from "@react-native-async-storage/async-storage"
 
 
 
@@ -14,7 +15,7 @@ const SettingScreen = () => {
     const navigation = useNavigation();
     const [modalLogout, setModalLogout] = useState(false);
     const [modalChangePass, setModalChangePass] = useState(false);
-
+    const[dataUser,setDataUser]=useState({});
 
     const doLogout = () => {
         setModalLogout(true);
@@ -22,6 +23,26 @@ const SettingScreen = () => {
     const doChangePass = () => {
         setModalChangePass(true);
     }
+
+    const getUser = async () => {
+        try {
+            let user = await AsyncStorage.getItem('data');
+            const userData = await JSON.parse(user);
+            setDataUser(userData);
+        } catch (error) {
+            console.log(error);
+        }
+
+    }
+
+    const handleChangePass = () => {
+
+    }
+
+    useEffect(()=>{
+        getUser();
+        
+    },[])
     return (
         <View style={styles.container}>
             <View style={styles.header}>
@@ -103,7 +124,7 @@ const SettingScreen = () => {
                             <CustomTextInput label={'Mật khẩu mới'} props={{ secureTextEntry: true }} />
                             <CustomTextInput label={'Nhập lại mật khẩu'} props={{ secureTextEntry: true }} />
 
-                            <View style={{paddingHorizontal:Spacing.space_20}}>
+                            <View style={{ paddingHorizontal: Spacing.space_20 }}>
                                 <CustomButton label={'Đổi'} />
                             </View>
                         </View>

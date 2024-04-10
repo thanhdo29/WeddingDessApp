@@ -1,4 +1,4 @@
-import { Button, Image, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList, ActivityIndicator } from 'react-native'
+import { Button, Image, StyleSheet, Text, TouchableOpacity, View, ScrollView, FlatList, ActivityIndicator, Alert } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import Icon1 from 'react-native-vector-icons/MaterialCommunityIcons'
 import { useNavigation } from '@react-navigation/native'
@@ -41,7 +41,7 @@ const HomeScreen = () => {
       setStaff(result);
     } catch (error) {
       console.log(error);
-    }finally{
+    } finally {
       setIsLoadingStaff(false);
     }
 
@@ -87,6 +87,30 @@ const HomeScreen = () => {
     return foundJob ? foundJob.descriptionJob : '';
   }
 
+  const complete = async (id) => {
+    try {
+      let res =await fetch(link_api+"Assign/put/" + id, {
+        method: "PUT",
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          statusJob: true
+        })
+      })
+      if (res.status===200) {
+        Alert.alert("Thông báo", "Xác nhận");
+      }else{
+        Alert.alert("Thông báo", "Thất bại");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+
+  }
+
   useEffect(() => {
     const loadData = async () => {
       setIsLoading(true);
@@ -108,7 +132,7 @@ const HomeScreen = () => {
         <View style={styles.container}>
           <Text style={styles.title}>Danh sách nhân viên</Text>
 
-          {isLoadingStaff?(<ActivityIndicator size={'large'}/>):(
+          {isLoadingStaff ? (<ActivityIndicator size={'large'} />) : (
             (staff.map(item => (
               <View key={item._id} style={{
                 flexDirection: 'row',
@@ -140,21 +164,26 @@ const HomeScreen = () => {
     } else if (role === 'staff') {
       return (
         <View style={styles.container}>
-          <Text style={styles.title}>Danh sách công việc</Text>
-          {isLoading ? (
-            <ActivityIndicator size={'large'} />
-          ) : (
-            assign.map((ass) => (
+        <Text style={styles.title}>Danh sách công việc</Text>
+        {isLoading ? (
+          <ActivityIndicator size={'large'} />
+        ) : (
+          assign.map((ass) => {
+            if (ass.statusJob) {
+              return null; 
+            }
+            return (
               <View key={ass._id} style={styles.khungJob}>
                 <Text>Công việc: {getJobNameById(ass.idJob)}</Text>
-                <Text>Ngày bắt đầu:  {`${(new Date(ass.dateStart)).getDate()}-${(new Date(ass.dateStart)).getMonth() + 1}-${(new Date(ass.dateStart)).getFullYear()}`}</Text>
+                <Text>Ngày bắt đầu: {`${(new Date(ass.dateStart)).getDate()}-${(new Date(ass.dateStart)).getMonth() + 1}-${(new Date(ass.dateStart)).getFullYear()}`}</Text>
                 <Text>Ngày kết thúc: {`${(new Date(ass.dateEnd)).getDate()}-${(new Date(ass.dateEnd)).getMonth() + 1}-${(new Date(ass.dateEnd)).getFullYear()}`}</Text>
                 <Text>Mô tả: {getJobDesById(ass.idJob)}</Text>
-                <CustomButton label={'Hoàn thành'} />
+                <CustomButton label={'Hoàn thành'} onPress={() => complete(ass._id)} />
               </View>
-            ))
-          )}
-        </View>
+            );
+          })
+        )}
+      </View>
       )
     }
   }

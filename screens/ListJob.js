@@ -13,6 +13,7 @@ import { useNavigation } from '@react-navigation/native';
 
 
 const ListJob = () => {
+  
   const navigation = useNavigation();
 
   const [data, setData] = useState([]);
