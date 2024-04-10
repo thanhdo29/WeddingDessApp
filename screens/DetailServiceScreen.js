@@ -60,7 +60,7 @@ const DetailServiceScreen = ({ route }) => {
   await findphone();
   await findnameCustomer();
   await findnameStaff();
-  let res = await fetch('http://172.19.201.46:3000/Bill/add', {
+  let res = await fetch('http://192.168.54.3:3000/Bill/add', {
 
       method: "POST",
       headers: {
@@ -83,6 +83,7 @@ const DetailServiceScreen = ({ route }) => {
     });
     if(res.status===200){
       Alert.alert("thêm thành công")
+      navigation.navigate('cart')
     } else{
       Alert.alert("thêm thất bại")
     }
@@ -91,7 +92,7 @@ const DetailServiceScreen = ({ route }) => {
   // lấy danh sách nhân viên
   const fetchData = async () => {
     try {
-      let res = await fetch('http://172.19.201.46:3000/User/list');
+      let res = await fetch('http://192.168.54.3:3000/User/list');
       let result = await res.json();
       setdataStaff(result);
     } catch (error) {
@@ -110,7 +111,7 @@ const DetailServiceScreen = ({ route }) => {
 
   const fetCustomer=async()=>{
     try {
-      let res =await fetch('http://172.19.201.46:3000/Customer/list');
+      let res =await fetch('http://192.168.54.3:3000/Customer/list');
       let result = await res.json();
       setdataCustomer(result);
       console.log("thành coong2")

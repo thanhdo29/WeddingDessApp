@@ -1,9 +1,41 @@
 import { FlatList, Image, StyleSheet, Text, View } from 'react-native'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Colors, Fontsizes, Radius, Spacing } from '../constants'
 
 const BillScreen = () => {
+  const [databill, setdatabill] = useState([]);
+  const [title, settite] = useState("Xác nhân");
 
+  const fetbill=async()=>{
+    try {
+      let res =await fetch('http://192.168.54.3:3000/Bill/list');
+      let result = await res.json();
+      setdatabill(result);
+      console.log("Thành công 4");
+     
+    } catch (error) {
+      console.log("lấy không thành công")
+    }
+  }
+
+  useEffect(()=>{
+    fetbill();
+    
+  },[])
+
+  const xacnhan=(id_item)=>{
+    const update = databill.map(bill=>{
+      if(bill._id===id_item){
+       bill.status=true
+  
+      }
+      return bill
+    })
+    setdatabill(update);
+   
+    console.log(update)
+  }
+  
   const renderItem = () => {
     return (
       <View style={styles.item}>
@@ -25,13 +57,33 @@ const BillScreen = () => {
   }
 
   return (
-    <View style={styles.container}>
-      <View style={{ alignItems: 'center', marginTop: Spacing.space_12 }}>
-        <Text style={styles.title}>Đơn hàng</Text>
-      </View>
-      <FlatList />
-    </View>
+    <View style={{alignItems:'center'}}>
+    <Text>DANH SÁCH GIỎ HÀNG</Text>
+    <FlatList
+      data={databill}
+      keyExtractor={(item)=>item._id}
+      renderItem={({item})=>{
+       
+        return(
+         item.status ?
 
+          <View style={styles.item}>
+            <View><Image source={{uri:item.img}} style={{width:90,height:110}}></Image></View>
+            <View style={{margin:10}}>
+            <Text>Tên dịch vụ: {item.nameService}</Text>
+            <Text>Tên nhân viên: {item.nameStaff}</Text>
+            <Text>Tên khách hàng: {item.nameCustomer}</Text>
+            <Text>số điện thoại khách hàng: {item.numberphone}</Text>
+            <Button title={title}  onPress={()=>xacnhan(item._id)}></Button>
+            </View>
+            
+          </View>
+          :<></>
+        )
+      }}
+    ></FlatList>
+    
+  </View>
     
   )
 }
@@ -83,5 +135,15 @@ const styles = StyleSheet.create({
     color: Colors.Black,
     fontSize: Fontsizes.fs_15,
     margin: Spacing.space_4
+  },
+  item:{
+    flex:1,
+    alignItems:'center',
+    borderRadius:10,
+    borderColor:'blue',
+    backgroundColor:'gray',
+    margin:10,
+    justifyContent:'space-around',
+    flexDirection:'row'
   }
 })

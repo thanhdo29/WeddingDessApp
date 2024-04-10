@@ -42,19 +42,16 @@ const ListServiceScreen = () => {
   //   return item.toLowerCase().includes(searchKeyword.toLowerCase());
   // })
 
-<<<<<<< HEAD
-=======
   const link_api="http://192.168.54.3:3000/";
 
 
->>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
   const handleAddService = async () => {
     if (serviceName === "" || servicePrice === "" || serviceDes === "") {
       Alert.alert("Thông báo", 'Vui lòng nhập đủ thông tin')
       return;
     }
 
-    let res = await fetch('http://192.168.1.98:3000/Service/add', {
+    let res = await fetch('http://192.168.54.3:3000/Service/add', {
 
       method: "POST",
       headers: {
@@ -91,7 +88,7 @@ const ListServiceScreen = () => {
       }
 
 
-      const res = await fetch('http://192.168.1.98:3000/Service/put/' + item._id, {
+      const res = await fetch('http://192.168.54.3:3000/Service/put/' + item._id, {
 
         method: "PUT",
         headers: {
@@ -121,7 +118,7 @@ const ListServiceScreen = () => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://172.19.201.46:3000/Service/list');
+      let res = await fetch('http://192.168.54.3:3000/Service/list');
       let result = await res.json();
       setData(result);
     } catch (error) {

@@ -18,73 +18,15 @@ const HomeScreen = () => {
 
   const getData = async () => {
     try {
-<<<<<<< HEAD
-      let res = await fetch('http://192.168.1.98:3000/Service/list');
-      let Data = await res.json();
-      setdata(Data);
-=======
       const user = await AsyncStorage.getItem('data');
       const userData = JSON.parse(user);
       setUser(userData);
       console.log("thsufe:"+user);
       setRole(userData.status ? 'manager' : 'staff');
->>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
     } catch (error) {
       console.log(error);
     }
-<<<<<<< HEAD
-  }
-<<<<<<< HEAD
-  ///
-  useEffect(() => {
-    fetchData();
-  }, [])
-  //cart
-  const cartscreen =()=>{
-    navigation.navigate('cart')
-  }
-  return (
-    <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.title}>Trang chủ</Text>
-        <TouchableOpacity onPress={()=>cartscreen()}>
-          <Icon1 name="cart" size={30} color="black" style={{ padding: 10 }} />
-        </TouchableOpacity>
-
-      </View>
-      < Text style={styles.sectionTitle}>Hot Products</Text>
-      <Swiper autoplay={true} autoplayTimeout={1}>
-        {data.map((service) => (
-          <View key={service._id} style={styles.productItem}>
-            <TouchableOpacity
-            
-          onPress={()=>navigateToDetailService(service)}
-            
-          >
-            <Image source={{ uri: service.img }} style={{ width: 300, height: 300, alignItems: 'center' }}></Image>
-            <Text >{service.nameService}</Text>
-            <Text >{service.priceService}</Text>
-          </TouchableOpacity>
-          </View>
-        ))}
-
-      </Swiper>
-      {/* Danh sách sản phẩm mới */}
-      <View style={styles.section}>
-        <Text style={styles.sectionTitle}>New Products</Text>
-        <FlatList
-          horizontal
-          data={data}
-          keyExtractor={item => item._id}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.productItem} onPress={() => { navigation.navigate('detailService', { item }) }}>
-              <Image source={{ uri: item.img }} style={{ width: 200, height: 200, alignItems: 'center' }}></Image>
-              <Text >{item.nameService}</Text>
-            </TouchableOpacity>
-=======
-=======
   };
->>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
 
   const link_api = 'http://192.168.54.3:3000/';
 
@@ -119,7 +61,7 @@ const HomeScreen = () => {
 
   const getJobDesById = (jobId) => {
     const foundJob = job.find(item => item._id === jobId);
-    return foundJob ? foundJob.nameJob : '';
+    return foundJob ? foundJob.descriptionJob : '';
   };
 
   const complete = async (id) => {
@@ -135,7 +77,7 @@ const HomeScreen = () => {
         })
       });
       if (res.status === 200) {
-        Alert.alert("Thông báo", "Xác nhậm");
+        Alert.alert("Thông báo", "Xác nhận");
       } else {
         Alert.alert("Thông báo", "Thất bại");
       }
@@ -178,16 +120,6 @@ const HomeScreen = () => {
               <View style={styles.imageContainer}>
                 <Image style={styles.image} source={require('../assets/images/customer.jpg')} />
               </View>
-<<<<<<< HEAD
-            )))
->>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
-          )}
-        </View>
-      )
-    } else if (role === 'staff') {
-      return (
-        <View style={styles.container}>
-=======
               <View style={styles.infoContainer}>
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={styles.phone}>Số điện thoại: {item.numberPhone}</Text>
@@ -206,13 +138,16 @@ const HomeScreen = () => {
   const renderStaffScreen = () => {
     return (
       <View style={styles.container}>
->>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
         <Text style={styles.title}>Danh sách công việc</Text>
         {isLoading ? (
           <ActivityIndicator size={'large'} />
         ) : (
           assign.map(ass => {
-           
+            if (ass.statusJob===false) {
+              return (
+                <View><Text>Ht</Text></View>
+              );
+            }
             return (
               <View key={ass._id} style={styles.jobContainer}>
                 <Text>Công việc: {getJobDesById(ass.idJob)}</Text>

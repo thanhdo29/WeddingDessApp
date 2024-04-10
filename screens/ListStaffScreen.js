@@ -17,11 +17,7 @@ const ListStaffScreen = () => {
 
   const fetchData = async () => {
     try {
-<<<<<<< HEAD
-      let res = await fetch('http://192.168.1.98:3000/User/list');
-=======
       let res = await fetch(link_api+'User/list');
->>>>>>> 7add35f0005c46e6cb1c61c357d753a12eb1b2ae
       let result = await res.json();
       setData(result);
     } catch (error) {

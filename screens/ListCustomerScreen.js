@@ -34,14 +34,11 @@ const ListCustomerScreen = () => {
     }
   }
 
-<<<<<<< HEAD
-=======
   const link_api="http://192.168.54.3:3000/";
 
->>>>>>> 0f1913c59ed4fa3cd0ea33c2e146d4f6d7fb9220
   const fetchData = async () => {
     try {
-      let res = await fetch('http://192.168.1.98:3000/Customer/list');
+      let res = await fetch('http://192.168.54.3:3000/Customer/list');
       let result = await res.json();
       setData(result);
     } catch (error) {
@@ -56,7 +53,7 @@ const ListCustomerScreen = () => {
       return;
     }
     try {
-      let res = await fetch('http://192.168.1.98:3000/Customer/add', {
+      let res = await fetch('http://192.168.54.3:3000/Customer/add', {
         method: "POST",
         headers: {
           Accept: 'application/json',
@@ -89,7 +86,7 @@ const ListCustomerScreen = () => {
     }
 
     try {
-      let res = await fetch('http://192.168.1.98:3000/Customer/put/' + item._id, {
+      let res = await fetch('http://192.168.54.3:3000/Customer/put/' + item._id, {
         method: "PUT",
         headers: {
           Accept: 'application/json',

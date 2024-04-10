@@ -1,5 +1,7 @@
 import { FlatList, StyleSheet, Text, View,TouchableOpacity, Image, ScrollView, Button } from 'react-native'
 import React, {  useEffect, useState } from 'react'
+import { useNavigation } from '@react-navigation/native'
+import { Colors } from '../constants';
 
 const CartScreen = () => {
   
@@ -8,6 +10,9 @@ const CartScreen = () => {
   // const [dataCustomer, setdataCustomer] = useState([]);
   const [databill, setdatabill] = useState([]);
   const [title, settite] = useState("Xác nhân");
+
+  const navigation = useNavigation();
+
   // //lấy danh sách dịch vụ
   
   // const fetchData = async () => {
@@ -66,11 +71,10 @@ const CartScreen = () => {
   //lấy  danh sách bill
   const fetbill=async()=>{
     try {
-      let res =await fetch('http://192.168.1.98:3000/Bill/list');
+      let res =await fetch('http://192.168.54.3:3000/Bill/list');
       let result = await res.json();
       setdatabill(result);
       console.log("Thành công 4");
-     
     } catch (error) {
       console.log("lấy không thành công")
     }
@@ -101,8 +105,9 @@ const xacnhan=(id_item)=>{
     return bill
   })
   setdatabill(update);
- 
+  
   console.log(update)
+
 }
 //tìm danh sách
 
@@ -143,6 +148,9 @@ const xacnhan=(id_item)=>{
 export default CartScreen
 
 const styles = StyleSheet.create({
+  container:{
+    backgroundColor:Colors.Medium_Gray
+  },
   item:{
     flex:1,
     alignItems:'center',
@@ -151,6 +159,8 @@ const styles = StyleSheet.create({
     backgroundColor:'gray',
     margin:10,
     justifyContent:'space-around',
-    flexDirection:'row'
+    flexDirection:'row',
+    padding:10,
+    backfaceVisibility:Colors.White
   }
 })
