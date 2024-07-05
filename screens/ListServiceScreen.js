@@ -42,7 +42,7 @@ const ListServiceScreen = () => {
   //   return item.toLowerCase().includes(searchKeyword.toLowerCase());
   // })
 
-  const link_api="http://192.168.1.98:3000/";
+  const link_api="http://192.168.1.7:3000/";
 
 
   const handleAddService = async () => {
@@ -51,7 +51,7 @@ const ListServiceScreen = () => {
       return;
     }
 
-    let res = await fetch('http://192.168.1.98:3000/Service/add', {
+    let res = await fetch(link_api+'Service/add', {
 
       method: "POST",
       headers: {
@@ -88,7 +88,7 @@ const ListServiceScreen = () => {
       }
 
 
-      const res = await fetch('http://192.168.1.98:3000/Service/put/' + item._id, {
+      const res = await fetch(link_api+'Service/put/' + item._id, {
 
         method: "PUT",
         headers: {
@@ -118,7 +118,7 @@ const ListServiceScreen = () => {
 
   const fetchData = async () => {
     try {
-      let res = await fetch('http://192.168.1.98:3000/Service/list');
+      let res = await fetch(link_api+'Service/list');
       let result = await res.json();
       setData(result);
     } catch (error) {

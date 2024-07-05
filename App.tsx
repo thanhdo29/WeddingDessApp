@@ -15,6 +15,7 @@ import DetailStaffScreen from './screens/DetailStaffScreen';
 import DetailServiceScreen from './screens/DetailServiceScreen';
 import BottomTab from './navigation/BottonTab';
 import AssignScreen from './screens/AssignScreen';
+import ChatScreen from './screens/ChatScreen';
 
 
 
@@ -38,7 +39,7 @@ const App = () => {
         <Stack.Screen name='Customer' component={ListCustomerScreen}/>
         <Stack.Screen name='assign' component={AssignScreen}/>
         <Stack.Screen name='bill' component={BillScreen}/>
-        
+        <Stack.Screen name='chat' component={ChatScreen}/>
       </Stack.Navigator>
      </NavigationContainer>
   )

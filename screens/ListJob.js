@@ -25,7 +25,7 @@ const ListJob = () => {
   const [nameJob, setNameJob] = useState('');
   const [desJob, setDesJob] = useState('');
 
-  const link_api="http://192.168.1.98:3000/";
+  const link_api="http://192.168.1.7:3000/";
 
 
   const fetchData = async () => {
@@ -89,7 +89,7 @@ const ListJob = () => {
     }
 
     try {
-      const res = await fetch('http://192.168.1.98:3000/Job/add', {
+      const res = await fetch(link_api+'Job/add', {
         method: "POST",
         headers: {
           Accept: 'application/json',

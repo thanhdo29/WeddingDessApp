@@ -23,13 +23,14 @@ const AssignScreen = ({ route }) => {
   const [openDateStart, setOpenDateStart] = useState(false);
   const [openDateEnd, setOpenDateEnd] = useState(false);
 
-  const link_api="http://192.168.54.3:3000/";
+  const link_api="http://192.168.1.7:3000/";
 
   const fetchDateJob = async () => {
     try {
       const res = await fetch(link_api+'Job/list');
       const result = await res.json();
       setDataJob(result);
+      console.log(result+"2");
     } catch (error) {
       console.log(error);
     }
@@ -50,7 +51,7 @@ const AssignScreen = ({ route }) => {
     fetchDateJob();
     fetchDateAssign();
 
-    console.log(dataAssign);
+    console.log(dataAssign+"2");
   }, [])
 
   const handleConfirmDate = (newDate, field) => {

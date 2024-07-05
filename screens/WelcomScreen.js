@@ -10,7 +10,7 @@ const WelcomScreen = () => {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('login');
-    }, 3000)
+    }, 5000)
   }, [])
   return (
     <View style={styles.container}>

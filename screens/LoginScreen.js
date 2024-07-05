@@ -16,7 +16,7 @@ const LoginScreen = () => {
   const navigation = useNavigation();
 
 
-  const link_api="http://192.168.1.98:3000/";
+  const link_api="http://192.168.1.7:3000/";
 
 
   const handleInputChange = (text, field) => {
@@ -29,8 +29,6 @@ const LoginScreen = () => {
 
 
   const login = async () => {
-
-    navigation.navigate('home2')
 
     if (email === "" || password === "") {
       showMessage({
@@ -68,7 +66,7 @@ const LoginScreen = () => {
         const user = responseData.user;
         console.log(user);
 
-        navigation.navigate('home', { role: user.role })
+        // navigation.navigate('home', { role: user.role })
 
         showMessage({
           message: 'Đăng nhập thành công',
@@ -83,7 +81,7 @@ const LoginScreen = () => {
 
       } else {
         showMessage({
-          message: 'Tài khoản hoặc mật khẩu không chính xác  1',
+          message: 'Tài khoản hoặc mật khẩu không chính xác',
           type: 'danger',
           position: 'center',
         });
